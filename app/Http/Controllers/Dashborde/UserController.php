@@ -18,20 +18,20 @@ class UserController extends Controller
     public function AllUser()
     {
         $allUsers = User::get();
-        
+
         return view('User.Home',compact('allUsers'));
     }
     public function ActiveUser()
     {
-        
+
         $allUsers = User::get()->where('status',__('messages.active'));
-        
+
         return view('User.Home',compact('allUsers'));
     }
     public function NotActiveUser()
     {
         $allUsers = User::get()->where('status',__('messages.unactive'));
-        
+
         return view('User.Home',compact('allUsers'));
     }
 
@@ -54,18 +54,18 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(UserRequest $request)
-    {   
-        //Validation              
+    {
+        //Validation
 
         //insert data into tabel
         User::create([
             'email'=> $request->email,
             'password'=>$request->password,
-            'level_id'=>$request->level,
+            'level_id'=>$request->level_id,
             'status'=>$request->status,
-        ]);    
-        
-        
+        ]);
+
+
         //retrun into index page
         return redirect()->route('User.allUser')->with(['success'=>__('messages.data has been inserted successfully')]);
     }
@@ -99,8 +99,8 @@ class UserController extends Controller
 
         return view('User.Edit',compact('user','levels'));
     }
-    
-  
+
+
 
     /**
      * Update the specified resource in storage.
@@ -111,7 +111,7 @@ class UserController extends Controller
      */
     public function activate($User_id)
     {
-        
+
         $user= User::find($User_id);
         if(!$user)
         {
@@ -130,24 +130,24 @@ class UserController extends Controller
 
     public function unactivate($User_id)
     {
-        
+
         $user= User::find($User_id);
         if(!$user)
         {
             return redirect()->route('User.allUser')->with(['error'=>__('messages.user').$User_id.__('messages.not exist m')]);
         }
-      
-        
+
+
             $user->update([
                 'status'=>'0'
             ]);
-        
-        
+
+
 
         return redirect()->back()->with(['success'=>__('messages.data has been updated successfully')]);
 
     }
-        
+
 
 
     public function update(UserRequest $request,$User_id)
@@ -163,7 +163,7 @@ class UserController extends Controller
         //update data
         $uesr->update($request->all());
 
-        //return into Advertisment page 
+        //return into Advertisment page
         return redirect()->route('User.index')->with(['success'=>__('messages.data has been updated successfully')]);
     }
 
@@ -187,6 +187,6 @@ class UserController extends Controller
         return redirect()->route('User.index')->with(['success'=>__('messages.data has been deleted successfully')]);
     }
 
-   
+
 
 }
