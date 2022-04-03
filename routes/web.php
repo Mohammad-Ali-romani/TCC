@@ -1,8 +1,10 @@
 <?php
+namespace routes;
 
 use App\Http\Controllers\Dashborde\PostController;
 use App\Http\Controllers\Dashborde\SubjectController;
 use App\Http\Controllers\Dashborde\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
