@@ -95,3 +95,7 @@ Route::get('test',[PostController::class,'test'])->name('test');
 
 
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
