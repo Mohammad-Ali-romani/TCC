@@ -47,7 +47,7 @@ return [
     'maximum character limit for name is 100'=>'الحد الاعلى للمحارف العنوان هو 100',
     'this format is not file'=>'هذه الصغية ليست ملف',
     'maximum size limit for file is 30mb'=>'الحد الاقصى للملف هو 30mb',
-    'the file of type must be pdf , png , bmp , jpg , xlsx'=>'نوع الملف يجب ان يكون  pdf , png , bmp , jpg , xlsx , pptx , docx',
+    'the file of type must be pdf , png , bmp , jpg'=>'نوع الملف يجب ان يكون  pdf , png , bmp , jpg',
     'maximum character limit for description is 254'=>'الحد الاعلى للمحارف التفاصيل  هو 254',
 
 

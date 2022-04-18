@@ -10,7 +10,8 @@ Trait DashbordeTrait
         if($file != null)
         {
             $fileExtension= $file->getClientOriginalExtension();
-            $fileNameClient=$file->getClientOriginalName();
+            //$fileNameClient=$file->getClientOriginalName();
+            $fileNameClient = pathinfo($file,PATHINFO_FILENAME);
             $fileName=$fileNameClient.'_'.time().'.'.$fileExtension;
             $file->move($folder,$fileName);
             return $fileName;

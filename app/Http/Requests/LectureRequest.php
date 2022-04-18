@@ -26,7 +26,7 @@ class LectureRequest extends FormRequest
         return [
             'title'=>'required|max:100',
             
-            'file'=>'file|max:30720|mimes:png,jpg,bmp,pdf,xlsx,pptx,docx|required',
+            'file'=>'file|max:30720|mimes:png,jpg,bmp,pdf|required',
         ];
     }
 
@@ -37,7 +37,7 @@ class LectureRequest extends FormRequest
             'title.max'=>__('messages.maximum character limit for title is 100'),
             'file.file'=>__('messages.this format is not file'),
             'file.max'=>__('messages.maximum size limit for file is 30mb'),
-            'file.mimes'=>__('messages.the file of type must be pdf , png , bmp , jpg , xlsx'),
+            'file.mimes'=>__('messages.the file of type must be pdf , png , bmp , jpg'),
 
         ];
     }
