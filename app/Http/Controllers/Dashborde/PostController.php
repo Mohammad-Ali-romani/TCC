@@ -607,9 +607,9 @@ class PostController extends Controller
         $q = $request->q;
         $years = $request->years;
         $depts = $request->depts;
-
-        $filteredLectre = Subject::where('name', 'like', '%' . $q . '%')
-                                    ->where('dept_id','=',$depts)
+//        $dept = Dept::find($depts);
+//        $posts = $dept->posts();
+        $filteredLectre = Post::where('title', 'like', '%' . $q . '%')
                                     ->get();
 
         if ($filteredLectre->count()) {
