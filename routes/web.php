@@ -76,9 +76,7 @@ Route::group(['prefix'=>'Subject'],function(){
 
 });
 
-Route::group(['prefix'=>'User'],function()
-{
-
+Route::group(['prefix'=>'User'],function() {
     Route::get('All User',[UserController::class,'AllUser'])->name('User.allUser');
     Route::get('Active User',[UserController::class,'ActiveUser'])->name('User.activeUser');
     Route::get('Not Active User',[UserController::class,'NotActiveUser'])->name('User.notActiveUser');
@@ -89,7 +87,6 @@ Route::group(['prefix'=>'User'],function()
     Route::get('delete/{User_id}',[UserController::class,'destroy'])->name('User.delete');
     Route::get('active/{User_id}',[UserController::class,'activate'])->name('User.activate');
     Route::get('unactive/{User_id}',[UserController::class,'unactivate'])->name('User.unactivate');
-
 });
 
 Route::get('test',[PostController::class,'test'])->name('test');
