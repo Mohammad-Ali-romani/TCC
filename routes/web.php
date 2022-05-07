@@ -22,7 +22,16 @@ use Illuminate\Support\Facades\Route;
 //define('PAGINATION_COUNT',10);
 
 //Route::get('/',[UserController::class,'login'])->name('login');
+
+
 Route::get('/',[PostController::class,'indexAdvertisment']);
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+//['register' => false]
+Auth::routes();
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::group(['prefix'=>'Advertisment'],function(){
 
@@ -41,6 +50,8 @@ Route::group(['prefix'=>'Lecture'],function(){
     Route::get('edit/{Lecture_id}',[PostController::class,'editLecture'])->name('Lecture.edit');
     Route::post('update/{Lecture_id}',[PostController::class,'updateLecture'])->name('Lecture.update');
     Route::get('delete/{Lecture_id}',[PostController::class,'destroyLectrue'])->name('Lecture.delete');
+    Route::post('/',[PostController::class,'searchLecture'])->name('Lecture.search');
+
 
 });
 
@@ -89,6 +100,7 @@ Route::group(['prefix'=>'User'],function()
     Route::get('delete/{User_id}',[UserController::class,'destroy'])->name('User.delete');
     Route::get('active/{User_id}',[UserController::class,'activate'])->name('User.activate');
     Route::get('unactive/{User_id}',[UserController::class,'unactivate'])->name('User.unactivate');
+    Route::post('All User',[UserController::class,'search'])->name('User.search');
 
 });
 
@@ -98,6 +110,4 @@ Route::get('test',[PostController::class,'test'])->name('test');
 
 
 
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

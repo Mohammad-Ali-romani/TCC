@@ -8,6 +8,7 @@ use App\Http\Requests\AdvertismentRequest;
 use App\Http\Requests\LectureRequest;
 use App\Http\Requests\MarkRequest;
 use App\Http\Requests\ProgramRequest;
+use Illuminate\Http\Request;
 
 use App\Traits\DashbordeTrait;
 use App\Models\Post;
@@ -42,7 +43,7 @@ class PostController extends Controller
             'years',
             'subject'
             ])->get()->where('category','!=',null);
-        
+
         return view('Advertisment.Home',compact('allAdvertismentsPosts'));
         // return $allAdvertismentsPosts;
     }
@@ -60,7 +61,7 @@ class PostController extends Controller
 
         //  return $allMarksPosts;
         return view('Mark.Home',compact('allMarksPosts'));
-    }  
+    }
 
 
     public function indexProgram()
@@ -143,7 +144,7 @@ class PostController extends Controller
     ############################################################################################################
         ################################ End functions Create ############################################
     ############################################################################################################
-    
+
 
     /**
      * Store a newly created resource in storage.
@@ -159,7 +160,7 @@ class PostController extends Controller
 
     public function storeAdvertisment(AdvertismentRequest $request)
     {
-        //get category id 
+        //get category id
         $category_id = Category::select('id','name')->where('name','advertisment')->get();
         $category_id = $category_id[0]->id;
 
@@ -189,7 +190,7 @@ class PostController extends Controller
         ]);
 
         return redirect()->route('Advertisment.create')->with(['success'=>__('messages.data has been inserted successfully')]);
-        
+
     }
 
     public function storeMark(MarkRequest $request)
@@ -205,7 +206,7 @@ class PostController extends Controller
 
         //insert into table post
         $post = Post::create([
-            'title'=>$request->title,          
+            'title'=>$request->title,
             'category_id'=>$category_id,
             'user_id'=>1,
             'subject_id'=>$request->subject,
@@ -226,7 +227,7 @@ class PostController extends Controller
 
     public function storeProgram(ProgramRequest $request)
     {
-        //get category id 
+        //get category id
         $category_id = Category::select('id','name')->where('name','program')->get();
         $category_id = $category_id[0]->id;
 
@@ -239,7 +240,7 @@ class PostController extends Controller
 
         //insert into table post
         $post = Post::create([
-            'title'=>$request->title,          
+            'title'=>$request->title,
             'category_id'=>$category_id,
             'user_id'=>1,  //$request->user,
         ]);
@@ -260,7 +261,7 @@ class PostController extends Controller
 
     public function storeLecture(LectureRequest $request)
     {
-        //get category id 
+        //get category id
         $category_id = Category::select('id','name')->where('name','Lecture')->get();
         $category_id = $category_id[0]->id;
 
@@ -282,7 +283,7 @@ class PostController extends Controller
             'file_type'=>$fileType,
             'post_id'=>$post->id,
         ]);
-        
+
         return redirect()->route('Lecture.index')->with(['success'=>__('messages.data has been inserted successfully')]);
     }
 
@@ -332,7 +333,7 @@ class PostController extends Controller
        $subjects =Subject::get();
         //return $advertisment_subjects;
         return view('Advertisment.Edit',compact('advertisment','advertisment_years','advertisment_depts','depts','years','advertisment_urls','advertisment_subjects','subjects'));
-       
+
     }
 
 
@@ -423,7 +424,7 @@ class PostController extends Controller
     public function updateAdvertisment(AdvertismentRequest $request ,$Advertisment_id)
     {
         $advertisment = Post::find($Advertisment_id);
-        
+
         // if (!$advertisment) {
         //     return redirect()->route('Advertisment.index')->with(['error' => __('messages.advertisment').$Advertisment_id.__('messages.not exist m')]);
         // }
@@ -432,7 +433,7 @@ class PostController extends Controller
             'title'=>$request->title,
             'description'=>$request->description,
             // 'subject_id'=>$request->subject,
-            
+
         ]);
         $advertisment->years()->sync($request->years);
         $advertisment->depts()->sync($request->depts);
@@ -446,7 +447,7 @@ class PostController extends Controller
     public function updateMark(MarkRequest $request ,$Mark_id)
     {
         $mark = Post::find($Mark_id);
-        
+
         if (!$mark) {
             return redirect()->route('Mark.index')->with(['error' =>__('messages.mark').$Mark_id.__('messages.not exist f')]);
         }
@@ -455,7 +456,7 @@ class PostController extends Controller
             'title'=>$request->title,
             'description'=>$request->description,
             'subject_id'=>$request->subject,
-            
+
         ]);
         $mark->years()->sync($request->year);
         $mark->depts()->sync($request->dept);
@@ -469,7 +470,7 @@ class PostController extends Controller
     public function updateProgram(ProgramRequest $request ,$Program_id)
     {
         $program = Post::find($Program_id);
-        
+
         if (!$program) {
             return redirect()->route('Advertisment.index')->with(['error' => __('messages.program').$Program_id.__('messages.not exist m')]);
         }
@@ -477,7 +478,7 @@ class PostController extends Controller
         $program->update([
             'title'=>$request->title,
             'user_id'=>1,  //$request->user,
-            
+
         ]);
         $program->years()->sync($request->years);
         $program->depts()->sync($request->depts);
@@ -491,7 +492,7 @@ class PostController extends Controller
     public function updateLecture(LectureRequest $request ,$Lectrue_id)
     {
         $lectrue = Post::find($Lectrue_id);
-        
+
         if (!$lectrue) {
             return redirect()->route('Lecture.index')->with(['error' => __('messages.lecture'). $Lectrue_id. __('messages.not exist m')]);;
         }
@@ -499,7 +500,7 @@ class PostController extends Controller
         $lectrue->update([
             'title'=>$request->title,
             'subject_id'=>$request->subject,
-            
+
         ]);
         $lectrue->years()->sync($request->year);
         $lectrue->depts()->sync($request->dept);
@@ -524,7 +525,7 @@ class PostController extends Controller
      ############################################################################################################
         ################################ Begin functions destory ############################################
     ############################################################################################################
-    
+
     public function destroyAdvertisment($Advertisment_id)
     {
         $advertisment = Post::find($Advertisment_id);
@@ -590,7 +591,47 @@ class PostController extends Controller
         ################################ End functions destory ############################################
     ############################################################################################################
 
+    ############################################################################################################
+        ################################ Begin functions Search ############################################
+    ############################################################################################################
 
+    public function searchLecture( Request $request) {
+
+
+        $request->validate([
+
+            'q' => 'required'
+        ]);
+
+
+        $q = $request->q;
+        $years = $request->years;
+        $depts = $request->depts;
+
+        $filteredLectre = Subject::where('name', 'like', '%' . $q . '%')
+                                    ->where('dept_id','=',$depts)
+                                    ->get();
+
+        if ($filteredLectre->count()) {
+
+            return view('Lecture.Home')->with([
+                'allLecturesPosts' =>  $filteredLectre
+            ]);
+        }
+    else {
+
+        return redirect()->route('Lecture.index')->with([
+            'status' => 'search failed ,, please try again'
+        ]);
+        }
+
+    }
+
+
+
+     ############################################################################################################
+        ################################ End functions Search ############################################
+    ############################################################################################################
 
 
 
@@ -599,8 +640,8 @@ class PostController extends Controller
 
     public function test()
     {
-     
-        
+
+
 
 
 
@@ -622,10 +663,10 @@ class PostController extends Controller
         // return $subjects_year;
 
       //  $allUsers = User::get()->where('status','0');
-        
+
       //  return view('User.Home',compact('allUsers'));
     //   $lecture = Post::find(22);
-     
+
 
     //   $lecture_years = $lecture->years;
     //   $lecture_depts = $lecture->depts;
@@ -648,7 +689,7 @@ class PostController extends Controller
     //            return 'false';
     //        }
     //    }
-       
+
 
     //  // return $lecture;
     //  // return $lecture_depts;

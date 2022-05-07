@@ -1,12 +1,57 @@
 @extends('layout.layout')
 
 @section('content')
+
+
 <div class="table-responsive">
     <table class="table table-striped table-sm">
      <thead>
       <h2>{{__('views/user.users')}}</h2>
        <a href="{{route('User.create')}}" class="user btn btn-info" >{{__('views/user.add').' '.__('views/user.user')}}</a>
     </thead>
+{{-- search --}}
+
+    <form method="POST" action="{{route('User.search')}}" enctype="multipart/form-data">
+      @csrf
+      <input type="text" name="q" id="q" class="form-control">
+      <button type="submit" class="btn btn-primary mt-2"> Search</button>
+
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="Active" value="1" @checked()>
+        <label class="form-check-label" for="flexRadioDefault2">
+          الفعالين
+        </label>
+      </div>
+
+      
+
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="Active" value="0" @checked()>
+        <label class="form-check-label" for="flexCheckDefault">
+          الغير الفعالين
+        </label>
+      </div>
+
+      <label for="exampleFormControlTextarea1" class="form-label">{{__('views/user.level')}} </label>
+      <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="level_id">
+        <option value="" selected disabled hidden>Choose here</option>
+        <option value="1" @selected()>Adminstrator </option>
+        <option value="2" @selected()>Leader </option>
+        <option value="3" @selected()>StudentBody </option>
+        <option value="4" @selected()>Student </option>
+
+   
+      </select> 
+      
+    
+    </form>
+
+    @if( session('status'))
+        <div class="alert alert-info">
+            {{ session('status')}}
+        </div>
+    @endif
+{{-- search --}}
 
     </table>
   </div>

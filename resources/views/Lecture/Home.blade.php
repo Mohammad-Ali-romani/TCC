@@ -7,6 +7,33 @@
       <h2>{{__('views/post.lectures')}}</h2>
        <a href="{{route('Lecture.create')}}" class="user btn btn-info" >{{__('views/post.add').' '.__('views/post.lecture')}} </a>
     </thead>
+{{-- search --}}
+
+<form method="POST" action="{{route('Lecture.search')}}" enctype="multipart/form-data">
+    @csrf
+    <input type="text" name="q" id="q" class="form-control">
+    <button type="submit" class="btn btn-primary mt-2"> Search</button>
+
+    <br>
+    <label for="exampleFormControlTextarea1" class="form-label">Dept </label>
+    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="depts">
+      <option value="" selected disabled hidden>Choose here</option>
+      <option value="1" @selected()>Software engineering</option>
+      <option value="2" @selected()>Network Engineering </option>
+      <option value="3" @selected()>computer engineering </option>
+
+
+    </select>
+
+
+  </form>
+
+  @if( session('status'))
+      <div class="alert alert-info">
+          {{ session('status')}}
+      </div>
+  @endif
+{{-- search --}}
 
     </table>
   </div>
@@ -32,7 +59,7 @@
                 <td>{{$Lecture->id}}</td>
 
                 <td>
-                  
+
                   @foreach ($Lecture->depts as $dept)
 
                   {{ $dept->name }}<br>
@@ -40,11 +67,11 @@
 
               </td>
               <td>
-                 
+
                   @foreach ($Lecture->years as $year)
                   {{ $year->name }}<br>
                   @endforeach
-                 
+
               </td>
 
                 <td>{{$Lecture->subject->name}}</td>

@@ -187,6 +187,39 @@ class UserController extends Controller
         return redirect()->route('User.index')->with(['success'=>__('messages.data has been deleted successfully')]);
     }
 
+    //Search
+    public function search( Request $request) {
+
+        $request->validate([
+
+            'q' => 'required'
+        ]);
+
+
+        $q = $request->q;
+        $Active = $request->Active;
+        $level_id = $request->level_id;
+        
+        $filteredUsers = User::where('name', 'like', '%' . $q . '%')
+                                ->where('status' ,'=',$Active)->where('level_id','=',$level_id)
+                                ->orWhere('email', 'like', '%' . $q . '%')
+                                ->where('status' ,'=',$Active)->where('level_id','=',$level_id)
+                                ->get();
+
+        if ($filteredUsers->count()) {
+
+            return view('User.Home')->with([
+                'allUsers' =>  $filteredUsers
+            ]);
+        }
+    else {
+            
+        return redirect()->route('User.allUser')->with([
+            'status' => 'search failed ,, please try again'
+        ]);
+        }
+    }
+
 
 
 }
