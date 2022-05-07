@@ -88,6 +88,7 @@ Route::group(['prefix'=>'Subject'],function(){
 });
 
 Route::group(['prefix'=>'User'],function() {
+<<<<<<< HEAD
     Route::get('All User', [UserController::class, 'AllUser'])->name('User.allUser');
     Route::get('Active User', [UserController::class, 'ActiveUser'])->name('User.activeUser');
     Route::get('Not Active User', [UserController::class, 'NotActiveUser'])->name('User.notActiveUser');
@@ -100,6 +101,21 @@ Route::group(['prefix'=>'User'],function() {
     Route::get('unactive/{User_id}', [UserController::class, 'unactivate'])->name('User.unactivate');
 
     Route::post('All User', [UserController::class, 'search'])->name('User.search');
+=======
+    Route::get('All User',[UserController::class,'AllUser'])->name('User.allUser');
+    Route::get('Active User',[UserController::class,'ActiveUser'])->name('User.activeUser');
+    Route::get('Not Active User',[UserController::class,'NotActiveUser'])->name('User.notActiveUser');
+    Route::get('create',[UserController::class,'create'])->name('User.create');
+    Route::post('create/store',[UserController::class,'store'])->name('User.store');
+    Route::get('edit/{User_id}',[UserController::class,'edit'])->name('User.edit');
+    Route::post('update/{User_id}',[UserController::class,'update'])->name('User.update');
+    Route::get('delete/{User_id}',[UserController::class,'destroy'])->name('User.delete');
+    Route::get('active/{User_id}',[UserController::class,'activate'])->name('User.activate');
+    Route::get('unactive/{User_id}',[UserController::class,'unactivate'])->name('User.unactivate');
+    Route::post('All User',[UserController::class,'search'])->name('User.search');
+
+});
+>>>>>>> a365e12327d38374e481479d34248863b7600064
 
 });
 
