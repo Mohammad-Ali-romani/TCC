@@ -16,11 +16,11 @@
 
     <br>
     <label for="exampleFormControlTextarea1" class="form-label">Dept </label>
-    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="depts">
-      <option value="" selected disabled hidden>Choose here</option>
-      <option value="1" @selected()>Software engineering</option>
-      <option value="2" @selected()>Network Engineering </option>
-      <option value="3" @selected()>computer engineering </option>
+    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="dept">
+      {{-- <option value="" selected disabled hidden>Choose here</option> --}}
+      <option value="1" @selected()>Software Engineering</option>
+      <option value="2" @selected()>Computer Engineering </option>
+      <option value="3" @selected()>Network Engineering </option>
 
 
     </select>

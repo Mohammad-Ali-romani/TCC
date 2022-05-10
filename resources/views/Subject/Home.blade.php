@@ -10,46 +10,30 @@
 
     {{-- search --}}
 
-    <form method="POST" action="{{route('User.search')}}" enctype="multipart/form-data">
-      @csrf
-      <input type="text" name="q" id="q" class="form-control">
-      <button type="submit" class="btn btn-primary mt-2"> Search</button>
+<form method="POST" action="{{route('Subject.search')}}" enctype="multipart/form-data">
+    @csrf
+    <input type="text" name="q" id="q" class="form-control">
+    <button type="submit" class="btn btn-primary mt-2"> Search</button>
 
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="Active" value="1" @checked()>
-        <label class="form-check-label" for="flexRadioDefault2">
-          الفعالين
-        </label>
+    <br>
+    <label for="exampleFormControlTextarea1" class="form-label">Dept </label>
+    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="dept">
+      {{-- <option value="" selected disabled hidden>Choose here</option> --}}
+      <option value="1" @selected()>Software Engineering</option>
+      <option value="2" @selected()>Computer Engineering </option>
+      <option value="3" @selected()>Network Engineering </option>
+
+
+    </select>
+
+
+  </form>
+
+  @if( session('status'))
+      <div class="alert alert-info">
+          {{ session('status')}}
       </div>
-
-      
-
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="Active" value="0" @checked()>
-        <label class="form-check-label" for="flexCheckDefault">
-          الغير الفعالين
-        </label>
-      </div>
-
-      <label for="exampleFormControlTextarea1" class="form-label">{{__('views/user.level')}} </label>
-      <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="level_id">
-        <option value="" selected disabled hidden>Choose here</option>
-        <option value="1" @selected()>Adminstrator </option>
-        <option value="2" @selected()>Leader </option>
-        <option value="3" @selected()>StudentBody </option>
-        <option value="4" @selected()>Student </option>
-
-   
-      </select> 
-      
-    
-    </form>
-
-    @if( session('status'))
-        <div class="alert alert-info">
-            {{ session('status')}}
-        </div>
-    @endif
+  @endif
 {{-- search --}}
 
     </table>
@@ -61,7 +45,7 @@
           <th scope="col">ID</th>
           <th scope="col">{{__('views/subject.subject name')}}</th>
           <th scope="col">{{__('views/subject.dept')}}</th>
-          <th scope="col">{{__('views/subject.year')}}</th>       
+          <th scope="col">{{__('views/subject.year')}}</th>
           <th scope="col">{{__('views/subject.processes')}}</th>
 
         </tr>

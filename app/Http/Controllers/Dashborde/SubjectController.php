@@ -19,8 +19,8 @@ class SubjectController extends Controller
     {
         $allSubjects = Subject::get();
        //return $allSubjects;
-       //return $allSubjects[0]->dept;          
-       
+       //return $allSubjects[0]->dept;
+
         return view('Subject.Home',compact('allSubjects'));
     }
 
@@ -47,16 +47,16 @@ class SubjectController extends Controller
     {
 
           //Validation
-  
+
           //insert data into tabel
          Subject::create([
               'name'=> $request->name,
               'dept_id'=>$request->dept,
               'year_id'=>$request->year,
           ]);
-         
+
           //retrun into index page
-          return redirect()->route('Subject.create')->with(['success'=>'تم إضافة البيانات بنجاح']); 
+          return redirect()->route('Subject.create')->with(['success'=>'تم إضافة البيانات بنجاح']);
     }
 
     /**
@@ -112,7 +112,7 @@ class SubjectController extends Controller
             'year_id'=>$request->year,
         ]);
 
-        //return into Advertisment page 
+        //return into Advertisment page
         return redirect()->route('Subject.index')->with(['success'=>'تم تعديل البيانات بنجاح']);
     }
 
@@ -135,7 +135,8 @@ class SubjectController extends Controller
     }
 
     //Search
-    public function search( Request $request) {
+    public function searchSubject( Request $request) {
+
 
         $request->validate([
 
@@ -144,26 +145,51 @@ class SubjectController extends Controller
 
 
         $q = $request->q;
-        $Active = $request->Active;
-        $level_id = $request->level_id;
-        
-        $filteredUsers = User::where('name', 'like', '%' . $q . '%')
-                                ->where('status' ,'=',$Active)->where('level_id','=',$level_id)
-                                ->orWhere('email', 'like', '%' . $q . '%')
-                                ->where('status' ,'=',$Active)->where('level_id','=',$level_id)
-                                ->get();
+        $dept = $request->dept;
+        // $dept = Dept::find($dept);
+        // $posts = $dept->posts();
 
-        if ($filteredUsers->count()) {
+        if ($dept == 1) {
+            $filteredLectre = Subject::where('name', 'like', '%' . $q . '%')
+                                    ->with('dept')
+                                    ->whereHas('dept',function ($query){
+                                        $query->where('name','Software engineering');
+                                    })
+                                    ->get();
+        }
 
-            return view('User.Home')->with([
-                'allUsers' =>  $filteredUsers
+        if ($dept == 2) {
+            $filteredLectre = Subject::where('name', 'like', '%' . $q . '%')
+                                    ->with('dept')
+                                    ->whereHas('dept',function ($query){
+                                        $query->where('name','computer engineering');
+                                    })
+                                    ->get();
+        }
+
+        if ($dept == 3) {
+            $filteredLectre = Subject::where('name', 'like', '%' . $q . '%')
+                                    ->with('dept')
+                                    ->whereHas('dept',function ($query){
+                                        $query->where('name','Software engineering');
+                                    })
+                                    ->get();
+        }
+
+        if ($filteredLectre->count()) {
+
+            return view('Subject.Home')->with([
+                'allSubjects' =>  $filteredLectre
             ]);
         }
     else {
-            
-        return redirect()->route('User.allUser')->with([
+
+        return redirect()->route('Subject.index')->with([
             'status' => 'search failed ,, please try again'
         ]);
         }
+
     }
+
+//end search
 }

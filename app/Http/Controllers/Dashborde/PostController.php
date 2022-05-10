@@ -605,12 +605,36 @@ class PostController extends Controller
 
 
         $q = $request->q;
-        $years = $request->years;
-        $depts = $request->depts;
-//        $dept = Dept::find($depts);
-//        $posts = $dept->posts();
-        $filteredLectre = Post::where('title', 'like', '%' . $q . '%')
+        $dept = $request->dept;
+        // $dept = Dept::find($dept);
+        // $posts = $dept->posts();
+
+        if ($dept == 1) {
+            $filteredLectre = Post::where('title', 'like', '%' . $q . '%')
+                                    ->with('depts')
+                                    ->whereHas('depts',function ($query){
+                                        $query->where('name','Software engineering');
+                                    })
                                     ->get();
+        }
+
+        if ($dept == 2) {
+            $filteredLectre = Post::where('title', 'like', '%' . $q . '%')
+                                    ->with('depts')
+                                    ->whereHas('depts',function ($query){
+                                        $query->where('name','computer engineering');
+                                    })
+                                    ->get();
+        }
+
+        if ($dept == 3) {
+            $filteredLectre = Post::where('title', 'like', '%' . $q . '%')
+                                    ->with('depts')
+                                    ->whereHas('depts',function ($query){
+                                        $query->where('name','Software engineering');
+                                    })
+                                    ->get();
+        }
 
         if ($filteredLectre->count()) {
 
@@ -627,9 +651,176 @@ class PostController extends Controller
 
     }
 
+    public function searchAdvertisment( Request $request) {
 
 
-     ############################################################################################################
+        $request->validate([
+
+            'q' => 'required'
+        ]);
+
+
+        $q = $request->q;
+        $dept = $request->dept;
+        // $dept = Dept::find($dept);
+        // $posts = $dept->posts();
+
+        if ($dept == 1) {
+            $filteredLectre = Post::where('title', 'like', '%' . $q . '%')
+                                    ->with('depts')
+                                    ->whereHas('depts',function ($query){
+                                        $query->where('name','Software engineering');
+                                    })
+                                    ->get();
+        }
+
+        if ($dept == 2) {
+            $filteredLectre = Post::where('title', 'like', '%' . $q . '%')
+                                    ->with('depts')
+                                    ->whereHas('depts',function ($query){
+                                        $query->where('name','computer engineering');
+                                    })
+                                    ->get();
+        }
+
+        if ($dept == 3) {
+            $filteredLectre = Post::where('title', 'like', '%' . $q . '%')
+                                    ->with('depts')
+                                    ->whereHas('depts',function ($query){
+                                        $query->where('name','Software engineering');
+                                    })
+                                    ->get();
+        }
+
+        if ($filteredLectre->count()) {
+
+            return view('Advertisment.Home')->with([
+                'allAdvertismentsPosts' =>  $filteredLectre
+            ]);
+        }
+    else {
+
+        return redirect()->route('Advertisment.index')->with([
+            'status' => 'search failed ,, please try again'
+        ]);
+        }
+
+    }
+
+    public function searchProgram( Request $request) {
+
+
+        $request->validate([
+
+            'q' => 'required'
+        ]);
+
+
+        $q = $request->q;
+        $dept = $request->dept;
+        // $dept = Dept::find($dept);
+        // $posts = $dept->posts();
+
+        if ($dept == 1) {
+            $filteredLectre = Post::where('title', 'like', '%' . $q . '%')
+                                    ->with('depts')
+                                    ->whereHas('depts',function ($query){
+                                        $query->where('name','Software engineering');
+                                    })
+                                    ->get();
+        }
+
+        if ($dept == 2) {
+            $filteredLectre = Post::where('title', 'like', '%' . $q . '%')
+                                    ->with('depts')
+                                    ->whereHas('depts',function ($query){
+                                        $query->where('name','computer engineering');
+                                    })
+                                    ->get();
+        }
+
+        if ($dept == 3) {
+            $filteredLectre = Post::where('title', 'like', '%' . $q . '%')
+                                    ->with('depts')
+                                    ->whereHas('depts',function ($query){
+                                        $query->where('name','Software engineering');
+                                    })
+                                    ->get();
+        }
+
+        if ($filteredLectre->count()) {
+
+            return view('Program.Home')->with([
+                'allProgramsPosts' =>  $filteredLectre
+            ]);
+        }
+    else {
+
+        return redirect()->route('Program.index')->with([
+            'status' => 'search failed ,, please try again'
+        ]);
+        }
+
+    }
+
+    public function searchMark( Request $request) {
+
+
+        $request->validate([
+
+            'q' => 'required'
+        ]);
+
+
+        $q = $request->q;
+        $dept = $request->dept;
+        // $dept = Dept::find($dept);
+        // $posts = $dept->posts();
+
+        if ($dept == 1) {
+            $filteredLectre = Post::where('title', 'like', '%' . $q . '%')
+                                    ->with('depts')
+                                    ->whereHas('depts',function ($query){
+                                        $query->where('name','Software engineering');
+                                    })
+                                    ->get();
+        }
+
+        if ($dept == 2) {
+            $filteredLectre = Post::where('title', 'like', '%' . $q . '%')
+                                    ->with('depts')
+                                    ->whereHas('depts',function ($query){
+                                        $query->where('name','computer engineering');
+                                    })
+                                    ->get();
+        }
+
+        if ($dept == 3) {
+            $filteredLectre = Post::where('title', 'like', '%' . $q . '%')
+                                    ->with('depts')
+                                    ->whereHas('depts',function ($query){
+                                        $query->where('name','Software engineering');
+                                    })
+                                    ->get();
+        }
+
+        if ($filteredLectre->count()) {
+
+            return view('Mark.Home')->with([
+                'allMarksPosts' =>  $filteredLectre
+            ]);
+        }
+    else {
+
+        return redirect()->route('Mark.index')->with([
+            'status' => 'search failed ,, please try again'
+        ]);
+        }
+
+    }
+
+
+############################################################################################################
         ################################ End functions Search ############################################
     ############################################################################################################
 
