@@ -47,21 +47,21 @@
     <input type="radio" class="" id="status"  name="status" value="0" @if ( old('status') == 0)  checked   @endif>
     <label for="exampleFormControlInput1" class="form-label">{{__('views/user.not active')}}</label>
   </div>
-  
+
 
 
   <label for="exampleFormControlTextarea1" class="form-label">{{__('views/user.level')}} </label>
   <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="level_id">
     @foreach ($levels as $level )
       <option value="{{$level->id}}" @if (old('level_id') == $level->id )  selected   @endif>{{$level->name}} </option>
-    @endforeach   
-  </select> 
+    @endforeach
+  </select>
   <br>
 
   <div >
     <button type="submit" class="btn btn-primary mb-3">{{__('views/user.add')}}</button>
   </div>
- 
+
 
 </div>
 </form>

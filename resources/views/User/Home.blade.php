@@ -23,7 +23,7 @@
         </label>
       </div>
 
-      
+
 
       <div class="form-check">
         <input class="form-check-input" type="radio" name="Active" value="0" @checked()>
@@ -40,10 +40,10 @@
         <option value="3" @selected()>StudentBody </option>
         <option value="4" @selected()>Student </option>
 
-   
-      </select> 
-      
-    
+
+      </select>
+
+
     </form>
 
     @if( session('status'))
@@ -79,20 +79,20 @@
                 <td>{{$User->email}}</td>
                 <td>{{$User->phone}}</td>
                 <td>{{$User->level->name}}</td>
-                <td>{{$User->status  }}</td>              
+                <td>{{$User->status  }}</td>
 
 
           <td>
             {{-- <a href="{{route('User.edit',$User->id)}}" class="btn btn-success">{{__('views/user.edit')}}</a> --}}
-            <a href="{{route('User.delete',$User->id)}}" class="btn btn-danger">{{__('views/user.delete')}}</a>   
+            <a href="{{route('User.delete',$User->id)}}" class="btn btn-danger">{{__('views/user.delete')}}</a>
 
             @if ($User->status == __('messages.active'))
             <a href="{{route('User.unactivate',$User->id)}}" class="btn btn-dark">{{__('views/user.unactivate')}}</a>
             @else
             <a href="{{route('User.activate',$User->id)}}" class="btn btn-success">{{__('views/user.activate')}}</a>
             @endif
-            
-            
+
+
           </td>
 
     </td>

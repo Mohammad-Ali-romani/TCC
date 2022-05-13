@@ -1,11 +1,12 @@
 <?php
 namespace routes;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Dashborde\PostController;
 use App\Http\Controllers\Dashborde\SubjectController;
 use App\Http\Controllers\Dashborde\UserController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,11 +29,9 @@ Route::get('/',[PostController::class,'indexAdvertisment']);
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-//['register' => false]
-Auth::routes();
+Auth::routes(['register' => false]);
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-
+Route::get('/profile', [HomeController::class, 'index'])->name('profile');
 Route::group(['prefix'=>'Advertisment'],function(){
 
     Route::get('/',[PostController::class,'indexAdvertisment'])->name('Advertisment.index');

@@ -6,9 +6,28 @@
         </button>
         <input class="form-control form-control-dark w-100" type="text" placeholder="{{__('views/component.search')}}" aria-label="{{__('views/component.search')}}">
         <div class="navbar-nav">
-          <div class="nav-item text-nowrap">
-            <a class="nav-link px-3" href="Sing in.html"> {{__('views/component.logout')}}</a>
-          </div>
+{{--          <div class="nav-item text-nowrap">--}}
+{{--            <a class="nav-link px-3" href="Sing in.html"> {{__('views/component.logout')}}</a>--}}
+{{--          </div>--}}
+            <li class="nav-item dropdown">
+                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    {{ Auth::user()->name }}
+                </a>
+
+
+                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <a href="{{ url('/profile') }}" class="dropdown-item">Profile</a>
+                    <a class="dropdown-item" href="{{ route('logout') }}"
+                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                </div>
+            </li>
         </div><a href=""></a>
       </header>
 </div>

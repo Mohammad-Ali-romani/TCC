@@ -15,6 +15,12 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
     public function AllUser()
     {
         $allUsers = User::get();
@@ -44,7 +50,7 @@ class UserController extends Controller
     {
         $levels = Level::select('id','name')->get();
 
-        return view('User.Create',compact('levels'));
+        return view('auth.register',compact('levels'));
     }
 
     /**
