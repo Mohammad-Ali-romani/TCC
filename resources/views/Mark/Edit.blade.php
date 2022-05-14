@@ -118,7 +118,9 @@
         <label for="formFile" class="form-label">{{__('views/post.existing files')}}</label>
         <br>
         @foreach ($mark_urls as $urls )
-        <a href={{$urls->url}}>{{$urls->file_type}}</a><br>
+        <a href={{asset($urls->url)}}>{{$urls->file_type}}</a>
+        <button type="submit" class="btn btn-danger mb-3"><a href="{{route('delete.url',$urls->id)}}">×</a></button>
+        <br>       
         {{-- <label for="formFile" class="form-label">{{$urls->file_type}}</label> --}}
         @endforeach
 

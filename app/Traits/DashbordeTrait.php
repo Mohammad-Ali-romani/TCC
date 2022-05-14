@@ -12,7 +12,7 @@ Trait DashbordeTrait
             $fileExtension= $file->getClientOriginalExtension();
             //$fileNameClient=$file->getClientOriginalName();
             $fileNameClient = pathinfo($file,PATHINFO_FILENAME);
-            $fileName=$fileNameClient.'_'.time().'.'.$fileExtension;
+            $fileName=$folder.'\\'.$fileNameClient.'_'.time().'.'.$fileExtension;
             $file->move($folder,$fileName);
             return $fileName;
         }

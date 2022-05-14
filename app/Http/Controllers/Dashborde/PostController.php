@@ -17,6 +17,7 @@ use App\Models\Subject;
 use App\Models\Url;
 use App\Models\Year;
 
+use Illuminate\Support\Facades\File as FacadesFile;
 
 class PostController extends Controller
 {
@@ -339,10 +340,10 @@ class PostController extends Controller
     public function editMark($Mark_id)
     {
         $mark = Post::find($Mark_id);
-        if (!$mark)
-        {
-            return redirect()->route('Mark.index')->with(['error' => __('messages.mark').$Mark_id.__('messages.not exist f')]);
-        }
+        // if (!$mark)
+        // {
+        //     return redirect()->route('Mark.index')->with(['error' => __('messages.mark').$Mark_id.__('messages.not exist f')]);
+        // }
 
         $mark_years = $mark->years;
         $mark_depts = $mark->depts;
@@ -424,7 +425,8 @@ class PostController extends Controller
     {
         $advertisment = Post::find($Advertisment_id);
         
-        // if (!$advertisment) {
+        // if (!$advertisment) 
+         //{
         //     return redirect()->route('Advertisment.index')->with(['error' => __('messages.advertisment').$Advertisment_id.__('messages.not exist m')]);
         // }
 
@@ -434,6 +436,19 @@ class PostController extends Controller
             // 'subject_id'=>$request->subject,
             
         ]);
+
+        if($request->file !=null)
+        {
+            $fileUrl = $this->saveFile($request->file,'assets\advertisment');
+            $fileType = $this->fileType($request->file);
+
+            Url::created([
+                'url'=>$fileUrl,
+                'file_type'=>$fileType,
+                'post_id'=>$advertisment->id,
+            ]);
+        }
+
         $advertisment->years()->sync($request->years);
         $advertisment->depts()->sync($request->depts);
 
@@ -457,6 +472,21 @@ class PostController extends Controller
             'subject_id'=>$request->subject,
             
         ]);
+
+
+        if($request->file !=null)
+        {
+            $fileUrl = $this->saveFile($request->file,'assets\marks');
+            $fileType = $this->fileType($request->file);
+    
+            Url::create([
+                'url'=>$fileUrl,
+                'file_type'=>$fileType,
+                'post_id'=>$mark->id,
+            ]);
+        }
+
+
         $mark->years()->sync($request->year);
         $mark->depts()->sync($request->dept);
 
@@ -479,8 +509,23 @@ class PostController extends Controller
             'user_id'=>1,  //$request->user,
             
         ]);
+
+
+        if($request->file !=null)
+        {
+            $fileUrl = $this->saveFile($request->file,'assets\programs');
+            $fileType = $this->fileType($request->file);
+
+            Url::create([
+                'url'=>$fileUrl,
+                'file_type'=>$fileType,
+                'post_id'=>$program->id,
+            ]);
+        }
+
         $program->years()->sync($request->years);
         $program->depts()->sync($request->depts);
+        
 
         return redirect()->route('Program.index')->with(['success' => __('messages.data has been updated successfully') . $Program_id]);
 
@@ -501,6 +546,18 @@ class PostController extends Controller
             'subject_id'=>$request->subject,
             
         ]);
+
+        if($request->file !=null)
+        {
+            $fileUrl = $this->saveFile($request->file,'assets\lectures');
+            $fileType = $this->fileType($request->file);
+            Url::create([
+                'url'=>$fileUrl,
+                'file_type'=>$fileType,
+                'post_id'=>$lectrue->id,
+            ]);
+        }
+
         $lectrue->years()->sync($request->year);
         $lectrue->depts()->sync($request->dept);
 
@@ -534,6 +591,14 @@ class PostController extends Controller
             return redirect()->route('Advertisment.index')->with(['error'=>__('messages.advertisment').$Advertisment_id.__('messages.not exist m')]);
         }
 
+        foreach($advertisment->urls as $file)
+        {
+            if (FacadesFile::exists($file->url))
+            {
+                unlink($file->url);
+            }
+        }  
+
         $advertisment->delete();
 
         return redirect()->route('Advertisment.index')->with(['success' =>__('messages.data has been deleted successfully')]);
@@ -548,6 +613,16 @@ class PostController extends Controller
         {
             return redirect()->route('Mark.index')->with(['error'=>__('messages.mark').$Mark_id.__('messages.not exist f')]);
         }
+
+        
+        foreach($mark->urls as $file)
+        {
+            if (FacadesFile::exists($file->url))
+            {
+                unlink($file->url);
+            }
+            
+        }  
 
         $mark->delete();
 
@@ -564,6 +639,14 @@ class PostController extends Controller
             return redirect()->route('Program.index')->with(['error'=>__('messages.program').$Program_id.__('messages.not exist m')]);
         }
 
+        foreach($program->urls as $file)
+        {
+            if (FacadesFile::exists($file->url))
+            {
+                unlink($file->url);
+            }
+        }  
+
         $program->delete();
 
         return redirect()->route('Program.index')->with(['success' => __('messages.data has been deleted successfully')]);
@@ -579,6 +662,14 @@ class PostController extends Controller
             return redirect()->route('Lecture.index')->with(['error'=>__('messages.lecture').$Lectrue_id.__('messages.not exist f')]);
         }
 
+        foreach($lectrue->urls as $file)
+        {
+            if (FacadesFile::exists($file->url))
+            {
+                unlink($file->url);
+            }
+        }  
+
         $lectrue->delete();
 
         return redirect()->route('Lecture.index')->with(['success' => __('messages.data has been deleted successfully')]);
@@ -590,6 +681,19 @@ class PostController extends Controller
         ################################ End functions destory ############################################
     ############################################################################################################
 
+    public function deleteUrl($url_id)
+    {
+        $url = Url::find($url_id);
+
+        if(!$url)
+        {
+            return redirect()->back()->with(['error'=>__('messages.this file is not exsit')]);
+        }
+        $url->delete();
+
+        return redirect()->back();
+
+    }
 
 
 

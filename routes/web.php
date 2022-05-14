@@ -32,6 +32,8 @@ Route::group(['prefix'=>'Advertisment'],function(){
     Route::get('edit/{Advertisment_id}',[PostController::class,'editAdvertisment'])->name('Advertisment.edit');
     Route::post('update/{Advertisment_id}',[PostController::class,'updateAdvertisment'])->name('Advertisment.update');
     Route::get('delete/{Advertisment_id}',[PostController::class,'destroyAdvertisment'])->name('Advertisment.delete');
+
+    Route::get('delete url/{url_id}',[PostController::class,'deleteUrl'])->name('delete.url');
 });
 
 Route::group(['prefix'=>'Lecture'],function(){
@@ -41,6 +43,8 @@ Route::group(['prefix'=>'Lecture'],function(){
     Route::get('edit/{Lecture_id}',[PostController::class,'editLecture'])->name('Lecture.edit');
     Route::post('update/{Lecture_id}',[PostController::class,'updateLecture'])->name('Lecture.update');
     Route::get('delete/{Lecture_id}',[PostController::class,'destroyLectrue'])->name('Lecture.delete');
+
+    Route::get('delete url/{url_id}',[PostController::class,'deleteUrl'])->name('delete.url');
 
 });
 
@@ -53,6 +57,8 @@ Route::group(['prefix'=>'Mark'],function(){
     Route::post('update/{Mark_id}',[PostController::class,'updateMark'])->name('Mark.update');
     Route::get('delete/{Mark_id}',[PostController::class,'destroyMark'])->name('Mark.delete');
 
+    Route::get('delete url/{url_id}',[PostController::class,'deleteUrl'])->name('delete.url');
+
 });
 Route::group(['prefix'=>'Program'],function(){
 
@@ -62,6 +68,8 @@ Route::group(['prefix'=>'Program'],function(){
     Route::get('edit/{Program_id}',[PostController::class,'editProgram'])->name('Program.edit');
     Route::post('update/{Program_id}',[PostController::class,'updateProgram'])->name('Program.update');
     Route::get('delete/{Program_id}',[PostController::class,'destroyProgram'])->name('Program.delete');
+
+    Route::get('delete url/{url_id}',[PostController::class,'deleteUrl'])->name('delete.url');
 
 });
 
