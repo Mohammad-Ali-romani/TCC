@@ -19,13 +19,13 @@ class UrlSeeder extends Seeder
         foreach(range(1,30) as $index)
         {
             DB::table('urls')->insert([
-                'url'=>$faker->url(),
+                'url'=>$faker->imageUrl,
                 'file_type'=>'pdf',
                 'post_id'=>rand(1,10),
                 'created_at'=>now(),
                 'updated_at'=>now(),
             ]);
         }
-        
+
     }
 }

@@ -21,13 +21,13 @@ class PostSeeder extends Seeder
          {
              DB::table('posts')->insert([
                 'title'=>$faker->title(),
-                'description'=>$faker->paragraph(),
+                'description'=>$faker->text(),
                  'category_id'=>rand(1,4),
                 'user_id'=>rand(1,10),
                  'subject_id'=>rand(1,16),
              ]);
          }
 
-        
+
     }
 }

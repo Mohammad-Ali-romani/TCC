@@ -1,11 +1,12 @@
 <?php
 namespace routes;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Dashborde\PostController;
 use App\Http\Controllers\Dashborde\SubjectController;
 use App\Http\Controllers\Dashborde\UserController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,8 +23,15 @@ use Illuminate\Support\Facades\Route;
 //define('PAGINATION_COUNT',10);
 
 //Route::get('/',[UserController::class,'login'])->name('login');
-Route::get('/',[PostController::class,'indexAdvertisment']);
 
+
+Route::get('/',[PostController::class,'indexAdvertisment']);
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Auth::routes(['register' => false]);
+
+Route::get('/profile', [HomeController::class, 'index'])->name('profile');
 Route::group(['prefix'=>'Advertisment'],function(){
 
     Route::get('/',[PostController::class,'indexAdvertisment'])->name('Advertisment.index');
@@ -32,8 +40,13 @@ Route::group(['prefix'=>'Advertisment'],function(){
     Route::get('edit/{Advertisment_id}',[PostController::class,'editAdvertisment'])->name('Advertisment.edit');
     Route::post('update/{Advertisment_id}',[PostController::class,'updateAdvertisment'])->name('Advertisment.update');
     Route::get('delete/{Advertisment_id}',[PostController::class,'destroyAdvertisment'])->name('Advertisment.delete');
+<<<<<<< HEAD
 
     Route::get('delete url/{url_id}',[PostController::class,'deleteUrl'])->name('delete.url');
+=======
+    Route::post('/',[PostController::class,'searchAdvertisment'])->name('Advertisment.search');
+
+>>>>>>> 95b82013f8ddf0ac4d7731c78a7d2291262047e5
 });
 
 Route::group(['prefix'=>'Lecture'],function(){
@@ -43,6 +56,8 @@ Route::group(['prefix'=>'Lecture'],function(){
     Route::get('edit/{Lecture_id}',[PostController::class,'editLecture'])->name('Lecture.edit');
     Route::post('update/{Lecture_id}',[PostController::class,'updateLecture'])->name('Lecture.update');
     Route::get('delete/{Lecture_id}',[PostController::class,'destroyLectrue'])->name('Lecture.delete');
+    Route::post('/',[PostController::class,'searchLecture'])->name('Lecture.search');
+
 
     Route::get('delete url/{url_id}',[PostController::class,'deleteUrl'])->name('delete.url');
 
@@ -56,6 +71,8 @@ Route::group(['prefix'=>'Mark'],function(){
     Route::get('edit/{Mark_id}',[PostController::class,'editMark'])->name('Mark.edit');
     Route::post('update/{Mark_id}',[PostController::class,'updateMark'])->name('Mark.update');
     Route::get('delete/{Mark_id}',[PostController::class,'destroyMark'])->name('Mark.delete');
+    Route::post('/',[PostController::class,'searchMark'])->name('Mark.search');
+
 
     Route::get('delete url/{url_id}',[PostController::class,'deleteUrl'])->name('delete.url');
 
@@ -68,6 +85,8 @@ Route::group(['prefix'=>'Program'],function(){
     Route::get('edit/{Program_id}',[PostController::class,'editProgram'])->name('Program.edit');
     Route::post('update/{Program_id}',[PostController::class,'updateProgram'])->name('Program.update');
     Route::get('delete/{Program_id}',[PostController::class,'destroyProgram'])->name('Program.delete');
+    Route::post('/',[PostController::class,'searchProgram'])->name('Program.search');
+
 
     Route::get('delete url/{url_id}',[PostController::class,'deleteUrl'])->name('delete.url');
 
@@ -81,31 +100,30 @@ Route::group(['prefix'=>'Subject'],function(){
     Route::get('edit/{Subject_id}',[SubjectController::class,'edit'])->name('Subject.edit');
     Route::post('update/{Subject_id}',[SubjectController::class,'update'])->name('Subject.update');
     Route::get('delete/{Subject_id}',[SubjectController::class,'destroy'])->name('Subject.delete');
+    Route::post('/',[SubjectController::class,'searchSubject'])->name('Subject.search');
+
 
 });
 
-Route::group(['prefix'=>'User'],function()
-{
+Route::group(['prefix'=>'User'],function() {
+    Route::get('All User', [UserController::class, 'AllUser'])->name('User.allUser');
+    Route::get('Active User', [UserController::class, 'ActiveUser'])->name('User.activeUser');
+    Route::get('Not Active User', [UserController::class, 'NotActiveUser'])->name('User.notActiveUser');
+    Route::get('create', [UserController::class, 'create'])->name('User.create');
+    Route::post('create/store', [UserController::class, 'store'])->name('User.store');
+    Route::get('edit/{User_id}', [UserController::class, 'edit'])->name('User.edit');
+    Route::post('update/{User_id}', [UserController::class, 'update'])->name('User.update');
+    Route::get('delete/{User_id}', [UserController::class, 'destroy'])->name('User.delete');
+    Route::get('active/{User_id}', [UserController::class, 'activate'])->name('User.activate');
+    Route::get('unactive/{User_id}', [UserController::class, 'unactivate'])->name('User.unactivate');
 
-    Route::get('All User',[UserController::class,'AllUser'])->name('User.allUser');
-    Route::get('Active User',[UserController::class,'ActiveUser'])->name('User.activeUser');
-    Route::get('Not Active User',[UserController::class,'NotActiveUser'])->name('User.notActiveUser');
-    Route::get('create',[UserController::class,'create'])->name('User.create');
-    Route::post('create/store',[UserController::class,'store'])->name('User.store');
-    Route::get('edit/{User_id}',[UserController::class,'edit'])->name('User.edit');
-    Route::post('update/{User_id}',[UserController::class,'update'])->name('User.update');
-    Route::get('delete/{User_id}',[UserController::class,'destroy'])->name('User.delete');
-    Route::get('active/{User_id}',[UserController::class,'activate'])->name('User.activate');
-    Route::get('unactive/{User_id}',[UserController::class,'unactivate'])->name('User.unactivate');
+    Route::post('All User', [UserController::class, 'search'])->name('User.search');
 
 });
 
-Route::get('test',[PostController::class,'test'])->name('test');
+Route::get('test', [PostController::class, 'test'])->name('test');
 
 
 
 
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
