@@ -12,7 +12,8 @@
 
 {{-- search --}}
 
-<form method="POST" action="{{route('Advertisment.search')}}" enctype="multipart/form-data">
+{{-- action commented by mohammad Alqahf cuz doing error in page home adv(cant fine route search)  2022/5/14  5:26  --}}
+<form method="POST" action="{{--{{route('Advertisment.search')}}--}}" enctype="multipart/form-data">
     @csrf
     <input type="text" name="q" id="q" class="form-control">
     <button type="submit" class="btn btn-primary mt-2"> Search</button>

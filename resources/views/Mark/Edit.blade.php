@@ -8,56 +8,49 @@
         <form method="POST" action="{{ route('Mark.update', $mark->id) }}" enctype="multipart/form-data">
             @csrf
             @method('POST')
-            @foreach ($depts as $dept)
-                <div class="form-check">
-                    <label for="dept" class="form-label">{{__('views/post.dept')}} </label>
-                    <input class="form-check-input" type="checkbox" value="{{ $dept->id }}" name="depts[]"
-                    @if (old('depts') == null)
-                        @foreach ($mark_depts as $mark_dept)
-                            @if ($mark_dept->id == $dept->id)
-                                checked
-                            @endif
-                        @endforeach
-                    @elseif (old('depts') != null )
-                        @foreach (old('depts') as $oldDepts)
-                            @if ($oldDepts == $dept->id)
-                                checked
-                            @endif
-                        @endforeach
-                    @endif       >
-
-            <label class="form-check-label" for="defaultCheck1">
-                {{ $dept->name }}
-            </label>
-    </div>
-    @endforeach
-
-
-
-    <label for="dept" class="form-label">{{__('views/post.year')}} </label>
-
-    @foreach ($years as $year)
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="{{ $year->id }}" name="years[]"
-            @if (old('years') == null)
-                @foreach ($mark_years as $mark_year)
-                    @if ($mark_year->id == $year->id)
-                        checked
-                    @endif
+            <label for="dept" class="form-label f-1">{{__('views/post.dept')}} </label>
+            <select class="form-control" name="dept">
+                
+                @foreach ($depts as $dept)                                 
+                        <option value="{{$dept->id}}"
+                            @if (old('dept') == null &&isset($mark_depts)&& $mark_depts->count()>0 &&$dept->id == $mark_depts[0]->id)
+                                    selected
+                            @elseif (old('dept') != null && old('dept') == $dept->id)   
+                                    selected
+                            @endif>
+                              {{$dept->name}}
+                            </option>      
                 @endforeach
-            @elseif (old('years') != null)    
-                @foreach (old('years') as $oldYears)
-                    @if ($oldYears == $year->id)
-                        checked
-                    @endif
-                @endforeach
-            @endif        >
+                </select>
 
-    <label class="form-check-label" for="defaultCheck1">
-        {{ $year->name }}
-    </label>
-    </div>
+                @error('dept')
+                    <small class="form-text text-danger">{{$message}}</small>
+                 @enderror
+
+    @error('dept')
+        <small class="form-text text-danger">{{$message}}</small>
+    @enderror
+
+    <br.
+
+
+
+    <label for="year" class="form-label">{{__('views/post.year')}} </label>
+    <select class="form-control" name="year">
+    @foreach ($years as $year)                                 
+           <option value="{{$year->id}}"
+            @if (old('year') == null && isset($mark_years) && $mark_years->count()>0 && $year->id == $mark_years[0]->id)
+                     selected 
+            @elseif (old('year') != null && old('year')== $year->id)                       
+                    selected                         
+            @endif>
+              {{$year->name}}
+            </option>
     @endforeach
+    </select>
+    @error('year')
+         <small class="form-text text-danger">{{$message}}</small>
+     @enderror
     <br>
 
 

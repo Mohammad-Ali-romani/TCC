@@ -32,7 +32,11 @@
     </div>
     @endforeach
 
+    @error('depts')
+        <small class="form-text text-danger">{{$message}}</small>  
+    @enderror
 
+    <br>
 
     <label for="dept" class="form-label">{{__('views/post.year')}} </label>
 
@@ -58,6 +62,11 @@
     </label>
     </div>
     @endforeach
+
+    @error('years')
+        <small class="form-text text-danger">{{$message}}</small>
+    @enderror
+    
     <br>
 
     {{-- <label for="subject" class="form-label">{{__('views/post.subject')}} </label>

@@ -5,7 +5,7 @@
         <h1>{{__('views/post.add').' '.__('views/post.program')}}</h1>
         <form method="POST" action="{{ route('Program.store') }}" enctype="multipart/form-data">
             @csrf
-            <label for="dept" class="form-label f-1">{{__('views/post.dept')}} </label>
+            <label for="depts" class="form-label f-1">{{__('views/post.dept')}} </label>
             @foreach ($depts as $dept)
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value={{ $dept->id}} name="depts[]"
@@ -21,8 +21,13 @@
                     </label>
                 </div>
             @endforeach
+
+            @error('depts')
+                <small class="form-text text-danger">{{$message}}</small>        
+            @enderror
+            
             <br>
-            <label for="dept" class="form-label">{{__('views/post.year')}} </label>
+            <label for="years" class="form-label">{{__('views/post.year')}} </label>
             @foreach ($years as $year)
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value={{ $year->id }} name="years[]"
@@ -38,6 +43,11 @@
                     </label>
                 </div>
             @endforeach
+
+            @error('years')
+                <small class="form-text text-danger">{{$message}}</small>
+            @enderror
+
             <br>
 
             {{-- <label for="dept" class="form-label">{{__('views/post.subject')}} </label>

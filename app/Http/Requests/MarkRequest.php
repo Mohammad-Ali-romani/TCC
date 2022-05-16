@@ -27,6 +27,8 @@ class MarkRequest extends FormRequest
             'title'=>'required|max:100',
             
             'file'=>'file|max:30720|mimes:png,jpg,bmp,pdf',
+            'dept'=>'required',
+            'year'=>'required'
         ];
     }
 
@@ -38,6 +40,8 @@ class MarkRequest extends FormRequest
             'file.file'=>__('messages.this format is not file'),
             'file.max'=>__('messages.maximum size limit for file is 30mb'),
             'file.mimes'=>__('messages.the file of type must be pdf , png , bmp , jpg'),
+            'dept.required'=>__('messages.dept is required'),
+            'year.required'=>__('messages.year is required'),
 
         ];
     }

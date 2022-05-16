@@ -27,6 +27,8 @@ class AdvertismentRequest extends FormRequest
             'title'=>'required|max:100',
             'description'=>'max:254',
             'file'=>'file|max:30720|mimes:png,jpg,bmp,pdf',
+            'years'=>'required',
+            'depts'=>'required'
         ];
     }
 
@@ -38,7 +40,9 @@ class AdvertismentRequest extends FormRequest
             'file.file'=>__('messages.this format is not file'),
             'file.max'=>__('messages.maximum size limit for file is 30mb'),
             'file.mimes'=>__('messages.the file of type must be pdf , png , bmp , jpg'),
-            'description'=>__('messages.maximum character limit for description is 254')
+            'description'=>__('messages.maximum character limit for description is 254'),
+            'years.required'=>__('messages.year is required'),
+            'depts.required'=>__('messages.dept is required'),
         ];
     }
 }

@@ -37,6 +37,8 @@ class PostController extends Controller
     public function indexAdvertisment()
     {
         // $x=Category::select('id','name')->where('name','advertisment')->get();
+
+        //get data { category (where category name == advertisment) , depts , years , subject   } where category is not null(this condetion cause return other data(prog,mark,lecut) == null)
         $allAdvertismentsPosts = Post::with([
             'category' => function($q){ $q->select('id','name')->where('name','advertisment'); },
             'depts',
@@ -52,6 +54,8 @@ class PostController extends Controller
 
     public function indexMark()
     {
+
+        //get data { category (where category name == mark) , depts , years , subject   } where category is not null(this condetion cause return other data(adve,prog,lecture) == null)
         $allMarksPosts = Post::with([
             'category'=>function($q){ $q->select('id','name')->where('name','mark'); },
             'depts',
@@ -66,6 +70,8 @@ class PostController extends Controller
 
     public function indexProgram()
     {
+
+        //get data { category (where category name = program) , depts , years , subject   } where category is not null(this condetion cause return other data(adve,mark ,lecture) == null)
         $allProgramsPosts = Post::with([
             'category'=>function ($q){ $q->select('id','name')->where('name','program'); },
             'depts',
@@ -80,6 +86,8 @@ class PostController extends Controller
 
     public function indexLecture()
     {
+
+         //get data { category (where category name = lecture) , depts , years , subject   } where category is not null(this condetion cause return other data(prog,mark,adve) == null)
         $allLecturesPosts = Post::with([
             'category'=>function ($q) { $q->select('id','name')->where('name','lecture'); },
             'depts',
@@ -107,7 +115,8 @@ class PostController extends Controller
 
     public function createAdvertisment()
     {
-        $depts = Dept::get();
+        // get all depts and years and subjects to send it into view 
+        $depts = Dept::get();      
         $years = Year::get();
         $subjects = Subject::get();
 
@@ -116,6 +125,7 @@ class PostController extends Controller
 
     public function createMark()
     {
+        // get all depts and years and subjects to send it into view 
         $depts = Dept::get();
         $years = Year::get();
         $subjects = Subject::get();
@@ -125,6 +135,7 @@ class PostController extends Controller
 
     public function createProgram()
     {
+        // get all depts and years and subjects to send it into view 
         $depts = Dept::get();
         $years = Year::get();
         $subjects = Subject::get();
@@ -134,6 +145,7 @@ class PostController extends Controller
 
     public function createLecture()
     {
+        // get all depts and years and subjects to send it into view 
         $depts = Dept::get();
         $years = Year::get();
         $subjects = Subject::get();
@@ -166,10 +178,7 @@ class PostController extends Controller
 
         //save file in folder (assets\advertisments)
         $fileUrl = $this->saveFile($request->file,'assets\advertisments');
-        $fileType = $this->fileType($request->file);
-
-        //validation
-
+        $fileType = $this->fileType($request->file);       
 
         //insert into table post
         $post = Post::create([
@@ -179,9 +188,12 @@ class PostController extends Controller
             'user_id'=>1,  //$request->user,
             // 'subject_id'=>$request->subject,
         ]);
+        // insert into tabel year_posts by relation (years())
         $post->years()->attach($request->years);
-        $post->depts()->attach($request->depts);
 
+        // insert into tabel  "dept_posts"  by relation (depts())
+        $post->depts()->attach($request->depts);
+        
         //insert into table url
         Url::create([
             'url'=>$fileUrl,
@@ -195,6 +207,7 @@ class PostController extends Controller
 
     public function storeMark(MarkRequest $request)
     {
+        //get category id 
         $category_id = Category::select('id','name')->where('name','mark')->get();
         $category_id = $category_id[0]->id;
 
@@ -202,7 +215,7 @@ class PostController extends Controller
         $fileUrl = $this->saveFile($request->file,'assets\marks');
         $fileType = $this->fileType($request->file);
 
-        //validation
+        
 
         //insert into table post
         $post = Post::create([
@@ -211,7 +224,10 @@ class PostController extends Controller
             'user_id'=>1,
             'subject_id'=>$request->subject,
         ]);
+        // insert into tabel "year_posts" by relation (years())
         $post->years()->attach($request->year);
+
+        // insert into tabel  "dept_posts"  by relation (depts())
         $post->depts()->attach($request->dept);
 
         //insert into table url
@@ -231,11 +247,9 @@ class PostController extends Controller
         $category_id = Category::select('id','name')->where('name','program')->get();
         $category_id = $category_id[0]->id;
 
-        //save file in folder (assets\programs)
+        //save file in folder (assets\programs) 
         $fileUrl = $this->saveFile($request->file,'assets\programs');
-        $fileType = $this->fileType($request->file);
-
-        //validation
+        $fileType = $this->fileType($request->file);     
 
 
         //insert into table post
@@ -244,7 +258,10 @@ class PostController extends Controller
             'category_id'=>$category_id,
             'user_id'=>1,  //$request->user,
         ]);
+        // insert into tabel "year_posts" by relation (years())
         $post->years()->attach($request->years);
+
+        // insert into tabel  "dept_posts"  by relation (depts())
         $post->depts()->attach($request->depts);
 
         //insert into table url
@@ -275,9 +292,13 @@ class PostController extends Controller
             'user_id'=>1,  //$request->user,
             'subject_id'=>$request->subject,
         ]);
+        // insert into tabel "year_posts" by relation (years())
         $post->years()->attach($request->year);
+
+        // insert into tabel  "dept_posts"  by relation (depts())
         $post->depts()->attach($request->dept);
 
+        //insert into table url
         Url::create([
             'url'=>$fileUrl,
             'file_type'=>$fileType,
@@ -317,17 +338,22 @@ class PostController extends Controller
 
     public function editAdvertisment($Advertisment_id)
     {
+        //get post(advertisment) by id  which should edit
         $advertisment = Post::find($Advertisment_id);
+
+        // check if post(advertisment) is exits or not
         if (!$advertisment)
         {
-            return redirect()->route('Advertisment.index')->with(['error' =>__('messages.advertisment').$Advertisment_id.__('messages.not exist m')]);
+            return redirect()->route('Advertisment.index')->with(['error' =>__('messages.advertisment')." ".__('messages.not exist m')]);
         }
 
+        // get depts and years and ulrs and subjects for this post(advertisment) and set it in variables  to retrun it into view (Advertisment.Edit)
         $advertisment_years = $advertisment->years;
         $advertisment_depts = $advertisment->depts;
         $advertisment_urls = $advertisment->urls;
         $advertisment_subjects = $advertisment->subject;
 
+        //get all depts and years and subject to return it into view (Advertisment.Edit)
        $depts = Dept::get();
        $years = Year::get();
        $subjects =Subject::get();
@@ -339,18 +365,22 @@ class PostController extends Controller
 
     public function editMark($Mark_id)
     {
+        //get post(mark) by id  which should edit
         $mark = Post::find($Mark_id);
-        // if (!$mark)
-        // {
-        //     return redirect()->route('Mark.index')->with(['error' => __('messages.mark').$Mark_id.__('messages.not exist f')]);
-        // }
 
-        $mark_years = $mark->years;
+        // check if post(mark) is exits or not
+        if (!$mark)
+        {
+            return redirect()->route('Mark.index')->with(['error' => __('messages.mark')." ".__('messages.not exist f')]);
+        }
+
+        // get depts and years and ulrs and subjects for this post(mark) and set it in variables  to retrun it into view (Mark.Edit)
+        $mark_years = $mark->years; 
         $mark_depts = $mark->depts;
         $mark_urls = $mark->urls;
         $mark_subjects = $mark->subject;
 
-
+        //get all depts and years and subject to return it into view (Mark.Edit)
        $depts = Dept::get();
        $years = Year::get();
        $subjects =Subject::get();
@@ -362,17 +392,22 @@ class PostController extends Controller
 
     public function editProgram($Program_id)
     {
+        //get post(program) by id  which should edit
         $program = Post::find($Program_id);
+
+        //check if post(program) is exits or not
         if (!$program)
         {
-            return redirect()->route('Program.index')->with(['error' => __('messages.program').$Program_id.__('messages.not exist m')]);
+            return redirect()->route('Program.index')->with(['error' => __('messages.program')." ".__('messages.not exist m')]);
         }
 
+        // get depts and years and ulrs and subjects for this post(Program) and set it in variables  to retrun it into view (Program.Edit)
         $program_years = $program->years;
         $program_depts = $program->depts;
         $program_urls = $program->urls;
         $program_subjects = $program->subject;
 
+        //get all depts and years and subject to return it into view (Program.Edit)
        $depts = Dept::get();
        $years = Year::get();
        $subjects =Subject::get();
@@ -383,18 +418,23 @@ class PostController extends Controller
 
     public function editLecture($Lecture_id)
     {
+        //get post(Lecture) by id  which should edit
         $lecture = Post::find($Lecture_id);
+
+        //check  if post(lecture) is exits or not
         if (!$lecture)
         {
-            return redirect()->route('Lecture.index')->with(['error' => __('messages.lecture').$Lecture_id.__('messages.not exist f')]);
+            return redirect()->route('Lecture.index')->with(['error' => __('messages.lecture')." ".__('messages.not exist f')]);
         }
 
+        // get depts and years and ulrs and subjects for this post(Lecture) and set it in variables  to retrun it into view (Lecture.Edit)
         $lecture_years = $lecture->years;
         $lecture_depts = $lecture->depts;
         $lecture_urls = $lecture->urls;
         $lecture_subjects = $lecture->subject;
 
-       $depts = Dept::get();
+        //get all depts and years and subject to return it into view (Lecture.Edit)
+       $depts = Dept::get(); 
        $years = Year::get();
        $subjects =Subject::get();
 
@@ -423,13 +463,16 @@ class PostController extends Controller
 
     public function updateAdvertisment(AdvertismentRequest $request ,$Advertisment_id)
     {
+        //get post(advertisment) by id  which should update
         $advertisment = Post::find($Advertisment_id);
         
+        // check if post(advertisment) is exits or not
         // if (!$advertisment) 
          //{
-        //     return redirect()->route('Advertisment.index')->with(['error' => __('messages.advertisment').$Advertisment_id.__('messages.not exist m')]);
+        //     return redirect()->route('Advertisment.index')->with(['error' => __('messages.advertisment').__('messages.not exist m')]);
         // }
-
+        
+        // update post(advertisment) in tabel (post)
         $advertisment->update([
             'title'=>$request->title,
             'description'=>$request->description,
@@ -437,11 +480,14 @@ class PostController extends Controller
             
         ]);
 
-        if($request->file !=null)
+        // check if view(Edit.Advertisment) send file or not send(null)
+        if($request->file != null)
         {
+            //save file which send in folder(assets\advertisment)
             $fileUrl = $this->saveFile($request->file,'assets\advertisment');
             $fileType = $this->fileType($request->file);
 
+            //insert url file into tabel "urls"
             Url::created([
                 'url'=>$fileUrl,
                 'file_type'=>$fileType,
@@ -449,10 +495,13 @@ class PostController extends Controller
             ]);
         }
 
+        // update years in tabel "year_posts" by relation (years())
         $advertisment->years()->sync($request->years);
+
+        // update depts in tabel "dept_posts" by relation (depts())
         $advertisment->depts()->sync($request->depts);
 
-        return redirect()->route('Advertisment.index')->with(['success' => __('messages.data has been updated successfully'). $Advertisment_id]);
+        return redirect()->route('Advertisment.index')->with(['success' => __('messages.data has been updated successfully')]);
 
 
     }
@@ -460,12 +509,16 @@ class PostController extends Controller
 
     public function updateMark(MarkRequest $request ,$Mark_id)
     {
+        //get post(mark) by id  which should update
         $mark = Post::find($Mark_id);
         
-        if (!$mark) {
-            return redirect()->route('Mark.index')->with(['error' =>__('messages.mark').$Mark_id.__('messages.not exist f')]);
+        // check if post(mark) is exits or not
+        if (!$mark) 
+        {
+            return redirect()->route('Mark.index')->with(['error' =>__('messages.mark')." ".__('messages.not exist f')]);
         }
 
+        // update post(mark) in tabel (post)
         $mark->update([
             'title'=>$request->title,
             'description'=>$request->description,
@@ -473,12 +526,14 @@ class PostController extends Controller
             
         ]);
 
-
+        // check if view(Edit.Mark) send file or not send(null)
         if($request->file !=null)
         {
+            //save file which send in folder(assets\marks)
             $fileUrl = $this->saveFile($request->file,'assets\marks');
             $fileType = $this->fileType($request->file);
-    
+
+            //insert url file into tabel "urls"
             Url::create([
                 'url'=>$fileUrl,
                 'file_type'=>$fileType,
@@ -486,11 +541,13 @@ class PostController extends Controller
             ]);
         }
 
-
+        // update years in tabel "year_posts" by relation (years())
         $mark->years()->sync($request->year);
+
+        // update depts in tabel "dept_posts" by relation (depts())
         $mark->depts()->sync($request->dept);
 
-        return redirect()->route('Mark.index')->with(['success' => __('messages.data has been updated successfully') . $Mark_id]);
+        return redirect()->route('Mark.index')->with(['success' => __('messages.data has been updated successfully') ]);
 
 
     }
@@ -498,24 +555,30 @@ class PostController extends Controller
 
     public function updateProgram(ProgramRequest $request ,$Program_id)
     {
+        //get post(program) by id  which should update
         $program = Post::find($Program_id);
         
-        if (!$program) {
-            return redirect()->route('Advertisment.index')->with(['error' => __('messages.program').$Program_id.__('messages.not exist m')]);
+        // check if post(program) is exits or not
+        if (!$program) 
+        {
+            return redirect()->route('Advertisment.index')->with(['error' => __('messages.program')." ".__('messages.not exist m')]);
         }
 
+        // update post(program) in tabel (post)
         $program->update([
             'title'=>$request->title,
             'user_id'=>1,  //$request->user,
             
         ]);
 
-
+        // check if view(Edit.Program) send file or not send(null)
         if($request->file !=null)
         {
+            //save file which send in folder(assets\programs)
             $fileUrl = $this->saveFile($request->file,'assets\programs');
             $fileType = $this->fileType($request->file);
 
+            //insert url file into tabel "urls"
             Url::create([
                 'url'=>$fileUrl,
                 'file_type'=>$fileType,
@@ -523,11 +586,14 @@ class PostController extends Controller
             ]);
         }
 
+        // update years in tabel "year_posts" by relation (years())
         $program->years()->sync($request->years);
+
+        // update depts in tabel "dept_posts" by relation (depts())
         $program->depts()->sync($request->depts);
         
 
-        return redirect()->route('Program.index')->with(['success' => __('messages.data has been updated successfully') . $Program_id]);
+        return redirect()->route('Program.index')->with(['success' => __('messages.data has been updated successfully')]);
 
 
     }
@@ -535,22 +601,30 @@ class PostController extends Controller
 
     public function updateLecture(LectureRequest $request ,$Lectrue_id)
     {
+        //get post(lectrue) by id  which should update
         $lectrue = Post::find($Lectrue_id);
         
-        if (!$lectrue) {
-            return redirect()->route('Lecture.index')->with(['error' => __('messages.lecture'). $Lectrue_id. __('messages.not exist m')]);;
+        // check if post(lectrue) is exits or not
+        if (!$lectrue) 
+        {
+            return redirect()->route('Lecture.index')->with(['error' => __('messages.lecture'). " ".__('messages.not exist m')]);;
         }
 
+        // update post(lecture) in tabel (post)
         $lectrue->update([
             'title'=>$request->title,
             'subject_id'=>$request->subject,
             
         ]);
 
+        // check if view(Edit.Lecture) send file or not send(null)
         if($request->file !=null)
         {
+            //save file which send in folder(assets\lectures)
             $fileUrl = $this->saveFile($request->file,'assets\lectures');
             $fileType = $this->fileType($request->file);
+
+            //insert url file into tabel "urls"
             Url::create([
                 'url'=>$fileUrl,
                 'file_type'=>$fileType,
@@ -558,10 +632,14 @@ class PostController extends Controller
             ]);
         }
 
+        // update years in tabel "year_posts" by relation (years())
         $lectrue->years()->sync($request->year);
+
+        // update depts in tabel "dept_posts" by relation (depts())
         $lectrue->depts()->sync($request->dept);
 
-        return redirect()->route('Lecture.index')->with(['success' => __('messages.data has been updated successfully') . $Lectrue_id]);
+
+        return redirect()->route('Lecture.index')->with(['success' => __('messages.data has been updated successfully') ]);
 
 
     }
@@ -584,21 +662,27 @@ class PostController extends Controller
     
     public function destroyAdvertisment($Advertisment_id)
     {
+        //get post(advertisment) by id  which should delete
         $advertisment = Post::find($Advertisment_id);
 
+        // check if post(advertisment) is exits or not
         if(!$advertisment)
         {
-            return redirect()->route('Advertisment.index')->with(['error'=>__('messages.advertisment').$Advertisment_id.__('messages.not exist m')]);
+            return redirect()->route('Advertisment.index')->with(['error'=>__('messages.advertisment')." ".__('messages.not exist m')]);
         }
 
+        // loop to each file  in this post(advertisment) 
         foreach($advertisment->urls as $file)
         {
+            //check if file is exits in folder or not
             if (FacadesFile::exists($file->url))
             {
+                //delete file in folder
                 unlink($file->url);
             }
         }  
 
+        // delete post(advertisment) in tabel "posts"
         $advertisment->delete();
 
         return redirect()->route('Advertisment.index')->with(['success' =>__('messages.data has been deleted successfully')]);
@@ -607,23 +691,28 @@ class PostController extends Controller
 
     public function destroyMark($Mark_id)
     {
+        //get post(mark) by id  which should delete
         $mark = Post::find($Mark_id);
 
+        // check if post(mark) is exits or not
         if(!$mark)
         {
-            return redirect()->route('Mark.index')->with(['error'=>__('messages.mark').$Mark_id.__('messages.not exist f')]);
+            return redirect()->route('Mark.index')->with(['error'=>__('messages.mark')." ".__('messages.not exist f')]);
         }
 
-        
+        // loop to each file  in this post(mark)
         foreach($mark->urls as $file)
         {
+            //check if file is exits in folder or not
             if (FacadesFile::exists($file->url))
             {
+                //delete file in folder
                 unlink($file->url);
             }
             
         }  
 
+        // delete post(mark) in tabel "posts"
         $mark->delete();
 
         return redirect()->route('Mark.index')->with(['success' => __('messages.data has been deleted successfully')]);
@@ -632,21 +721,27 @@ class PostController extends Controller
 
     public function destroyProgram($Program_id)
     {
+        //get post(program) by id  which should delete
         $program = Post::find($Program_id);
 
+        // check if post(program) is exits or not
         if(!$program)
         {
-            return redirect()->route('Program.index')->with(['error'=>__('messages.program').$Program_id.__('messages.not exist m')]);
+            return redirect()->route('Program.index')->with(['error'=>__('messages.program')." ".__('messages.not exist m')]);
         }
 
+        // loop to each file  in this post(program)
         foreach($program->urls as $file)
         {
+            //check if file is exits in folder or not
             if (FacadesFile::exists($file->url))
             {
+                //delete file in folder
                 unlink($file->url);
             }
         }  
 
+        // delete post(program) in tabel "posts"
         $program->delete();
 
         return redirect()->route('Program.index')->with(['success' => __('messages.data has been deleted successfully')]);
@@ -655,21 +750,27 @@ class PostController extends Controller
 
     public function destroyLectrue($Lectrue_id)
     {
+        //get post(lectrue) by id  which should delete
         $lectrue = Post::find($Lectrue_id);
 
+        // check if post(lectrue) is exits or not
         if(!$lectrue)
         {
-            return redirect()->route('Lecture.index')->with(['error'=>__('messages.lecture').$Lectrue_id.__('messages.not exist f')]);
+            return redirect()->route('Lecture.index')->with(['error'=>__('messages.lecture')." ".__('messages.not exist f')]);
         }
 
+        // delete post(lecture) in tabel "posts"
         foreach($lectrue->urls as $file)
         {
+            //check if file is exits in folder or not
             if (FacadesFile::exists($file->url))
             {
+                //delete file in folder
                 unlink($file->url);
             }
         }  
 
+        // delete post(lecture) in tabel "posts"
         $lectrue->delete();
 
         return redirect()->route('Lecture.index')->with(['success' => __('messages.data has been deleted successfully')]);
@@ -683,13 +784,24 @@ class PostController extends Controller
 
     public function deleteUrl($url_id)
     {
-        $url = Url::find($url_id);
+        //get ulr by id  which should delete
+        $urll = Url::find($url_id);
 
-        if(!$url)
+        // check if url is exits or not
+        if(!$urll)
         {
             return redirect()->back()->with(['error'=>__('messages.this file is not exsit')]);
         }
-        $url->delete();
+        
+        //check if file is exits in folder or not
+        if(FacadesFile::exists($urll->url))
+        {
+            //delete file in folder
+            unlink($urll->url);
+        }
+
+        //delete url in tabel "urls"
+        $urll->delete($urll->url);
 
         return redirect()->back();
 

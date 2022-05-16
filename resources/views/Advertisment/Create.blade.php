@@ -22,7 +22,12 @@
                     </label>
                 </div>
             @endforeach
+            @error('depts')
+                    <small class="form-text text-danger">{{$message}}</small>
+            @enderror
             <br>
+
+
             <label for="dept" class="form-label">{{__('views/post.year')}}</label>
             @foreach ($years as $year)
                 <div class="form-check">
@@ -39,6 +44,9 @@
                     </label>
                 </div>
             @endforeach
+            @error('years')
+                    <small class="form-text text-danger">{{$message}}</small>
+            @enderror
             <br>
 
             {{-- <label for="dept" class="form-label">{{__('views/post.subject')}} </label>

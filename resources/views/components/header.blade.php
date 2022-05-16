@@ -11,7 +11,8 @@
 {{--          </div>--}}
             <li class="nav-item dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                    {{ Auth::user()->name }}
+                    {{-- line 15 commented by mohammad Alqahf  2022/5/14  5:22  cuz doing error in page programs --}}
+                    {{-- {{ Auth::user()->name }} --}}
                 </a>
 
 

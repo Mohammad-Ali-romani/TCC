@@ -24,6 +24,7 @@ class SubjectController extends Controller
 
     public function index()
     {
+        // get subjects form table "subjects"
         $allSubjects = Subject::get();
        //return $allSubjects;
        //return $allSubjects[0]->dept;
@@ -38,6 +39,7 @@ class SubjectController extends Controller
      */
     public function create()
     {
+        //get depts and years and set it in variables to return it  into view(Subject.Create)
         $depts = Dept::get();
         $years = Year::get();
 
@@ -85,12 +87,16 @@ class SubjectController extends Controller
      */
     public function edit($Subject_id)
     {
+        // get subject by id  which should Edit
         $subject= Subject::find($Subject_id);
+
+        // check if subject is exist or not
         if(!$subject)
         {
             return redirect()->route('Subject.index')->with(['error'=>'المادة غير موجودة']);
         }
 
+        // get all depts and years to return it into view(Subject.Edit)
         $depts = Dept::get();
         $years = Year::get();
 
@@ -106,13 +112,15 @@ class SubjectController extends Controller
      */
     public function update(SubjectRequest $request,$Subject_id)
     {
+        //get subject by id should update
         $subject = Subject::find($Subject_id);
-        // check if id exiet
+
+        // check if subject is exist or not
         if(!$subject)
         {
             return redirect()->route('Subject.index')->with(['error'=>' المادة غير موجودة']);
         }
-        //update data
+        //update data in tabel "subjects"
         $subject->update([
             'name'=>$request->name,
             'dept_id'=>$request->dept,
@@ -131,13 +139,18 @@ class SubjectController extends Controller
      */
     public function destroy($Subject_id)
     {
+        //get subject by id should delete
         $subject= Subject::find($Subject_id);
-        // check if id exiet
+
+        // check if subject is exist or not
         if(!$subject)
         {
             return redirect()->route('Subject.index')->with(['error'=>'المادة غير موجودة']);
         }
+        
+        //delete subject from table "subjects"
         $subject->delete();
+
         return redirect()->route('Subject.index')->with(['success'=>'تم حذف البيانات بنجاح']);
     }
 

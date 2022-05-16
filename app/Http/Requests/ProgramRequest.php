@@ -27,6 +27,8 @@ class ProgramRequest extends FormRequest
             'title'=>'required|max:100',
             
             'file'=>'file|max:30720|mimes:png,jpg,bmp,pdf',
+            'depts'=>'required',
+            'years'=>'required',
         ];
     }
 
@@ -38,6 +40,8 @@ class ProgramRequest extends FormRequest
             'file.file'=>__('messages.this format is not file'),
             'file.max'=>__('messages.maximum size limit for file is 30mb'),
             'file.mimes'=>__('messages.the file of type must be pdf , png , bmp , jpg'),
+            'depts.required'=>__('messages.dept is required'),
+            'years.required'=>__('messages.year is required'),
 
         ];
     }

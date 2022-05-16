@@ -17,8 +17,13 @@
                         </option>
                 @endforeach
                 </select>
+                @error('dept')
+                <small class="form-text text-danger">{{$message}}</small>
+                @enderror
             <br>
-            <label for="dept" class="form-label">{{__('views/post.year')}} </label>
+
+
+            <label for="year" class="form-label">{{__('views/post.year')}} </label>
             <select class="form-control" name="year">
             @foreach ($years as $year)                                 
                     <option value="{{$year->id}}"
@@ -29,9 +34,14 @@
                     </option>
             @endforeach
             </select>
+
+            @error('year')
+                <small class="form-text text-danger">{{$message}}</small>
+              @enderror
+
             <br>
 
-            <label for="dept" class="form-label">{{__('views/post.subject')}} </label>
+            <label for="subject" class="form-label">{{__('views/post.subject')}} </label>
             <select class="form-control" name="subject">
             @foreach ($subjects as $subject)
                 <div class="form-check">
