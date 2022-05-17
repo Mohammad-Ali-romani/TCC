@@ -176,9 +176,7 @@ class PostController extends Controller
         $category_id = Category::select('id','name')->where('name','advertisment')->get();
         $category_id = $category_id[0]->id;
 
-        //save file in folder (assets\advertisments)
-        $fileUrl = $this->saveFile($request->file,'assets\advertisments');
-        $fileType = $this->fileType($request->file);       
+               
 
         //insert into table post
         $post = Post::create([
@@ -194,12 +192,21 @@ class PostController extends Controller
         // insert into tabel  "dept_posts"  by relation (depts())
         $post->depts()->attach($request->depts);
         
-        //insert into table url
-        Url::create([
-            'url'=>$fileUrl,
-            'file_type'=>$fileType,
-            'post_id'=>$post->id,
-        ]);
+        //check if file send or not
+        if($request->file != null)
+        {
+            //save file in folder (assets\advertisments)
+             $fileUrl = $this->saveFile($request->file,'assets\advertisments');
+             $fileType = $this->fileType($request->file);
+
+            //insert into table url
+             Url::create([
+                'url'=>$fileUrl,
+                'file_type'=>$fileType,
+                'post_id'=>$post->id,
+            ]);
+        }
+        
 
         return redirect()->route('Advertisment.create')->with(['success'=>__('messages.data has been inserted successfully')]);
         
@@ -211,9 +218,7 @@ class PostController extends Controller
         $category_id = Category::select('id','name')->where('name','mark')->get();
         $category_id = $category_id[0]->id;
 
-        //save file in folder (assets\marks)
-        $fileUrl = $this->saveFile($request->file,'assets\marks');
-        $fileType = $this->fileType($request->file);
+        
 
         
 
@@ -230,12 +235,21 @@ class PostController extends Controller
         // insert into tabel  "dept_posts"  by relation (depts())
         $post->depts()->attach($request->dept);
 
-        //insert into table url
-        Url::create([
-            'url'=>$fileUrl,
-            'file_type'=>$fileType,
-            'post_id'=>$post->id,
-        ]);
+        //check if file send or not (null)
+        if($request->file != null)
+        {
+            //save file in folder (assets\marks)
+             $fileUrl = $this->saveFile($request->file,'assets\marks');
+             $fileType = $this->fileType($request->file);
+            
+             //insert into table url
+            Url::create([
+                'url'=>$fileUrl,
+                'file_type'=>$fileType,
+                 'post_id'=>$post->id,
+            ]);
+        }
+       
 
         return redirect()->route('Mark.create')->with(['success'=>__('messages.data has been inserted successfully')]);
     }
@@ -247,9 +261,7 @@ class PostController extends Controller
         $category_id = Category::select('id','name')->where('name','program')->get();
         $category_id = $category_id[0]->id;
 
-        //save file in folder (assets\programs) 
-        $fileUrl = $this->saveFile($request->file,'assets\programs');
-        $fileType = $this->fileType($request->file);     
+            
 
 
         //insert into table post
@@ -264,12 +276,21 @@ class PostController extends Controller
         // insert into tabel  "dept_posts"  by relation (depts())
         $post->depts()->attach($request->depts);
 
-        //insert into table url
-        Url::create([
-            'url'=>$fileUrl,
-            'file_type'=>$fileType,
-            'post_id'=>$post->id,
-        ]);
+        //check if file send or not (null)
+        if($request->file != null)
+        {
+             //save file in folder (assets\programs) 
+             $fileUrl = $this->saveFile($request->file,'assets\programs');
+             $fileType = $this->fileType($request->file);
+
+            //insert into table url
+            Url::create([
+                'url'=>$fileUrl,
+                'file_type'=>$fileType,
+                'post_id'=>$post->id,
+               ]);
+        }
+       
 
 
         return redirect()->route('Program.create')->with(['success'=>__('messages.data has been inserted successfully')]);
@@ -282,9 +303,7 @@ class PostController extends Controller
         $category_id = Category::select('id','name')->where('name','Lecture')->get();
         $category_id = $category_id[0]->id;
 
-        //save file in folder (assets\lectures)
-        $fileUrl = $this->saveFile($request->file,'assets\lectures');
-        $fileType = $this->fileType($request->file);
+        
 
         $post = Post::create([
             'title'=>$request->title,
@@ -298,12 +317,21 @@ class PostController extends Controller
         // insert into tabel  "dept_posts"  by relation (depts())
         $post->depts()->attach($request->dept);
 
-        //insert into table url
-        Url::create([
-            'url'=>$fileUrl,
-            'file_type'=>$fileType,
-            'post_id'=>$post->id,
-        ]);
+        //check if file send or not (null)
+        if($request->file != null)
+        {
+            //save file in folder (assets\lectures)
+            $fileUrl = $this->saveFile($request->file,'assets\lectures');
+            $fileType = $this->fileType($request->file);
+
+            //insert into table url
+            Url::create([
+                'url'=>$fileUrl,
+                'file_type'=>$fileType,
+                'post_id'=>$post->id,
+            ]);
+        }
+        
         
         return redirect()->route('Lecture.index')->with(['success'=>__('messages.data has been inserted successfully')]);
     }
@@ -481,19 +509,23 @@ class PostController extends Controller
         ]);
 
         // check if view(Edit.Advertisment) send file or not send(null)
-        if($request->file != null)
+        if( $request->file != null)
         {
             //save file which send in folder(assets\advertisment)
             $fileUrl = $this->saveFile($request->file,'assets\advertisment');
             $fileType = $this->fileType($request->file);
 
             //insert url file into tabel "urls"
-            Url::created([
+            Url::create([
                 'url'=>$fileUrl,
                 'file_type'=>$fileType,
                 'post_id'=>$advertisment->id,
             ]);
+            
+
+            //return "im in";
         }
+
 
         // update years in tabel "year_posts" by relation (years())
         $advertisment->years()->sync($request->years);
