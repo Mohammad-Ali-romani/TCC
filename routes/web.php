@@ -7,6 +7,8 @@ use App\Http\Controllers\Dashborde\SubjectController;
 use App\Http\Controllers\Dashborde\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,9 +25,18 @@ use App\Http\Controllers\HomeController;
 //define('PAGINATION_COUNT',10);
 
 //Route::get('/',[UserController::class,'login'])->name('login');
+Route::get('/add-user',function(){
+    User::create([
+        'name' => 'mahammad ali',
+        'email' => 'mahammad.ali.romani@gmail.com',
+        'password' => Hash::make('themohammad'),
+        'phone' => '092314152',
+        'status' => true,
+        'level_id' => 1,
+    ]);
+});
 
-
-Route::get('/',[PostController::class,'indexAdvertisment']);
+Route::get('/',[PostController::class,'indexAdvertisment'])->middleware('auth');
 // Route::get('/', function () {
 //     return view('welcome');
 // });

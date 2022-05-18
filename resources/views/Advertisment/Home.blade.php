@@ -10,6 +10,7 @@
             <a href="{{ route('Advertisment.create') }}" class="user btn btn-info">{{__('views/post.add').' '.__('views/post.advertisment')}}</a>
         </thead>
 
+        <form action="{{route('logout')}}" method="post">@csrf<button class="btn">logout</button></form>
 {{-- search --}}
 
 {{-- action commented by mohammad Alqahf cuz doing error in page home adv(cant fine route search)  2022/5/14  5:26  --}}
