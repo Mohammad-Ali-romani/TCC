@@ -39,7 +39,7 @@ Route::group(['prefix'=>'Advertisment'],function(){
     Route::get('edit/{Advertisment_id}',[PostController::class,'editAdvertisment'])->name('Advertisment.edit');
     Route::post('update/{Advertisment_id}',[PostController::class,'updateAdvertisment'])->name('Advertisment.update');
     Route::get('delete/{Advertisment_id}',[PostController::class,'destroyAdvertisment'])->name('Advertisment.delete');
-    Route::get('delete url/{url_id}',[PostController::class,'deleteUrl'])->name('delete.url');
+
 });
 ############################################################################################################
 ################################################ Begin Routes Advertisment #################################
@@ -58,7 +58,6 @@ Route::group(['prefix'=>'Lecture'],function(){
     Route::post('update/{Lecture_id}',[PostController::class,'updateLecture'])->name('Lecture.update');
     Route::get('delete/{Lecture_id}',[PostController::class,'destroyLectrue'])->name('Lecture.delete');
     Route::post('/',[PostController::class,'searchLecture'])->name('Lecture.search');
-    Route::get('delete url/{url_id}',[PostController::class,'deleteUrl'])->name('delete.url');
 
 });
 ############################################################################################################
@@ -78,7 +77,6 @@ Route::group(['prefix'=>'Mark'],function(){
     Route::post('update/{Mark_id}',[PostController::class,'updateMark'])->name('Mark.update');
     Route::get('delete/{Mark_id}',[PostController::class,'destroyMark'])->name('Mark.delete');
     Route::post('/',[PostController::class,'searchMark'])->name('Mark.search');
-    Route::get('delete url/{url_id}',[PostController::class,'deleteUrl'])->name('delete.url');
 
 });
 ############################################################################################################
@@ -101,9 +99,10 @@ Route::group(['prefix'=>'Program'],function(){
     Route::post('/',[PostController::class,'searchProgram'])->name('Program.search');
 
 
-    Route::get('delete url/{url_id}',[PostController::class,'deleteUrl'])->name('delete.url');
+
 
 });
+Route::get('post/delete-url/{url_id}',[PostController::class,'deleteUrl'])->name('delete.url');
 ############################################################################################################
 ################################################ End Routes Program #################################
 ############################################################################################################
@@ -133,11 +132,11 @@ Route::group(['prefix'=>'Subject'],function(){
 ############################################################################################################
 ################################################ Begin Routes User #################################
 ############################################################################################################
-Route::group(['prefix'=>'User'],function() {
+Route::group(['prefix'=>'user'],function() {
 
-    Route::get('All User', [UserController::class, 'AllUser'])->name('User.allUser');
-    Route::get('Active User', [UserController::class, 'ActiveUser'])->name('User.activeUser');
-    Route::get('Not Active User', [UserController::class, 'NotActiveUser'])->name('User.notActiveUser');
+    Route::get('all', [UserController::class, 'AllUser'])->name('User.allUser');
+    Route::get('active', [UserController::class, 'ActiveUser'])->name('User.activeUser');
+    Route::get('unactive', [UserController::class, 'NotActiveUser'])->name('User.notActiveUser');
     Route::get('create', [UserController::class, 'create'])->name('User.create');
     Route::post('create/store', [UserController::class, 'store'])->name('User.store');
     Route::get('edit/{User_id}', [UserController::class, 'edit'])->name('User.edit');
@@ -146,7 +145,7 @@ Route::group(['prefix'=>'User'],function() {
     Route::get('active/{User_id}', [UserController::class, 'activate'])->name('User.activate');
     Route::get('unactive/{User_id}', [UserController::class, 'unactivate'])->name('User.unactivate');
 
-    Route::post('All User', [UserController::class, 'search'])->name('User.search');
+    Route::get('search', [UserController::class, 'search'])->name('User.search');
 
 });
 ############################################################################################################

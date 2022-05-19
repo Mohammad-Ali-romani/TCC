@@ -53,6 +53,8 @@
                 {{-- <th scope="col">{{__('views/post.subject')}}<+/th> --}}
                 <th scope="col">{{__('views/post.title').' '.__('views/post.advertisment')}}</th>
                 <th scope="col">{{__('views/post.description').' '.__('views/post.advertisment')}} </th>
+
+                <th scope="col">{{__('views/post.urls')}}</th>
                 <th scope="col"> {{__('views/post.processes')}} </th>
 
             </tr>
@@ -81,7 +83,7 @@
                 {{-- <td>{{ $Advertisment->subject->name }}</td> --}}
                 <td>{{ $Advertisment->title }}</td>
                 <td>{{ $Advertisment->description }}</td>
-
+                <x-field :post="$Advertisment" />
                 <td>
                     <a href="{{ route('Advertisment.edit', $Advertisment->id) }}" class="btn btn-success">{{__('views/post.edit')}}</a>
                     <a href="{{ route('Advertisment.delete', $Advertisment->id) }}" class="btn btn-danger">{{__('views/post.delete')}}</a>

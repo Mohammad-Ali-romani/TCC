@@ -51,7 +51,7 @@
           <th scope="col">المواد</th>
           <th scope="col">عنوان البرنامج</th>
           <th scope="col">تفاصيل البرنامج</th>
-
+            <th scope="col">{{__('views/post.urls')}}</th>
           <th scope="col"> خصائص </th>
 
         </tr>
@@ -86,7 +86,7 @@
                 </td>
                 <td>{{$Program->title}}</td>
                 <td>{{$Program->description}}</td>
-
+            <x-field :post="$Program" />
           <td><a href="{{route('Program.edit',$Program->id)}}" class="btn btn-success">تعديل</a>
 
             <a href="{{route('Program.delete',$Program->id)}}" class="btn btn-danger">حذف</a></td>

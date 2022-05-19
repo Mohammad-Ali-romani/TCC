@@ -49,6 +49,7 @@
           <th scope="col">{{__('views/post.subject')}}</th>
           <th scope="col">{{__('views/post.title').' '.__('views/post.mark')}}</th>
           <th scope="col">{{__('views/post.description').' '.__('views/post.mark')}}</th>
+            <th scope="col">{{__('views/post.urls')}}</th>
           <th scope="col"> {{__('views/post.processes')}} </th>
 
         </tr>
@@ -83,7 +84,7 @@
                 <td>{{$Mark->description}}</td>
                 <td></td>
 
-
+                <x-field :post="$Mark" />
 
           <td><a href="{{route('Mark.edit',$Mark->id)}}" class="btn btn-success">{{__('views/post.edit')}}</a>
 

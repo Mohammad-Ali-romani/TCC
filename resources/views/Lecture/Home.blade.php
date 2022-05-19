@@ -1,97 +1,96 @@
 @extends('layout.layout')
 
 @section('content')
-<div class="table-responsive">
-    <table class="table table-striped table-sm">
-     <thead>
-      <h2>{{__('views/post.lectures')}}</h2>
-       <a href="{{route('Lecture.create')}}" class="user btn btn-info" >{{__('views/post.add').' '.__('views/post.lecture')}} </a>
-    </thead>
-{{-- search --}}
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead>
+            <h2>{{__('views/post.lectures')}}</h2>
+            <a href="{{route('Lecture.create')}}"
+               class="user btn btn-info">{{__('views/post.add').' '.__('views/post.lecture')}} </a>
+            </thead>
+            {{-- search --}}
 
-<form method="POST" action="{{route('Lecture.search')}}" enctype="multipart/form-data">
-    @csrf
-    <input type="text" name="q" id="q" class="form-control">
-    <button type="submit" class="btn btn-primary mt-2"> Search</button>
+            <form method="POST" action="{{route('Lecture.search')}}" enctype="multipart/form-data">
+                @csrf
+                <input type="text" name="q" id="q" class="form-control">
+                <button type="submit" class="btn btn-primary mt-2"> Search</button>
 
-    <br>
-    <label for="exampleFormControlTextarea1" class="form-label">Dept </label>
-    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="dept">
-      {{-- <option value="" selected disabled hidden>Choose here</option> --}}
-      <option value="1" @selected()>Software Engineering</option>
-      <option value="2" @selected()>Computer Engineering </option>
-      <option value="3" @selected()>Network Engineering </option>
-
-
-    </select>
+                <br>
+                <label for="exampleFormControlTextarea1" class="form-label">Dept </label>
+                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="dept">
+                    {{-- <option value="" selected disabled hidden>Choose here</option> --}}
+                    <option value="1" @selected()>Software Engineering</option>
+                    <option value="2" @selected()>Computer Engineering</option>
+                    <option value="3" @selected()>Network Engineering</option>
 
 
-  </form>
+                </select>
 
-  @if( session('status'))
-      <div class="alert alert-info">
-          {{ session('status')}}
-      </div>
-  @endif
-{{-- search --}}
 
-    </table>
-  </div>
-  <div class="table-responsive">
-    <table class="table table-striped table-sm">
-      <thead>
-        <tr>
-          <th scope="col">ID</th>
-          <th scope="col">{{__('views/post.dept')}}</th>
-          <th scope="col">{{__('views/post.year')}}</th>
-          <th scope="col">{{__('views/post.subject')}}</th>
-          <th scope="col">{{__('views/post.title').' '.__('views/post.lecture')}}</th>
-          <th scope="col">{{__('views/post.description').' '.__('views/post.lecture')}}</th>
-          <th scope="col"> {{__('views/post.processes')}} </th>
+            </form>
 
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-            @foreach($allLecturesPosts as $Lecture)
+            @if( session('status'))
+                <div class="alert alert-info">
+                    {{ session('status')}}
+                </div>
+            @endif
+            {{-- search --}}
+
+        </table>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead>
             <tr>
+                <th scope="col">ID</th>
+                <th scope="col">{{__('views/post.title').' '.__('views/post.lecture')}}</th>
+                <th scope="col">{{__('views/post.description').' '.__('views/post.lecture')}}</th>
+                <th scope="col">{{__('views/post.dept')}}</th>
+                <th scope="col">{{__('views/post.year')}}</th>
+                <th scope="col">{{__('views/post.subject')}}</th>
+                <th scope="col">{{__('views/post.urls')}}</th>
+                <th scope="col"> {{__('views/post.processes')}} </th>
 
-                <td>{{$Lecture->id}}</td>
+            </tr>
+            </thead>
+            <tbody>
 
-                <td>
+            @foreach($allLecturesPosts as $Lecture)
+                <tr>
+                    <td>{{$Lecture->id}}</td>
+                    <td>
 
-                  @foreach ($Lecture->depts as $dept)
+                        @foreach ($Lecture->depts as $dept)
 
-                  {{ $dept->name }}<br>
-                  @endforeach
+                            {{ $dept->name }}<br>
+                        @endforeach
 
-              </td>
-              <td>
+                    </td>
+                    <td>
 
-                  @foreach ($Lecture->years as $year)
-                  {{ $year->name }}<br>
-                  @endforeach
+                        @foreach ($Lecture->years as $year)
+                            {{ $year->name }}<br>
+                        @endforeach
 
-              </td>
+                    </td>
+                    <td>{{$Lecture->subject->name}}</td>
+                    <td>{{$Lecture->title}}</td>
+                    <td>{{$Lecture->description}}</td>
+                    <x-field :post="$Lecture" />
+                    <td><a href="{{route('Lecture.edit',$Lecture->id)}}"
+                           class="btn btn-success">{{__('views/post.edit')}}</a>
 
-                <td>{{$Lecture->subject->name}}</td>
-                <td>{{$Lecture->title}}</td>
-                <td>{{$Lecture->description}}</td>
+                        <a href="{{route('Lecture.delete',$Lecture->id)}}"
+                           class="btn btn-danger">{{__('views/post.delete')}}</a></td>
 
-
-
-          <td><a href="{{route('Lecture.edit',$Lecture->id)}}" class="btn btn-success">{{__('views/post.edit')}}</a>
-
-            <a href="{{route('Lecture.delete',$Lecture->id)}}" class="btn btn-danger">{{__('views/post.delete')}}</a></td>
-
-    </td>
-    @endforeach
-      </tbody>
-    </table>
-  </div>
-</main>
-</div>
-</div>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+    </div>
+    </main>
+    </div>
+    </div>
 
 @endsection
 

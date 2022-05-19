@@ -11,7 +11,7 @@ class Url extends Model
 {
     use HasFactory;
     protected $fillable=['url','file_type','post_id','created_at','updated_at'];
-    protected $hidden=[];
+    protected $hidden=['post_id'];
 
     public function post()
     {

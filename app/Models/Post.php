@@ -43,4 +43,57 @@ class Post extends Model
     {
         return $this->belongsToMany(Year::class,'year_posts');
     }
+    public function scopegetAll($q,$cate){
+        switch ($cate){
+            case 1:
+                $q->with([
+                    'category',
+                    'depts',
+                    'years',
+                    'subject'
+                ])->with('urls',function($q){
+                    $q->select('url','post_id');
+                })->whereHas('category',function($q){
+                    $q->where('id', 1);
+                });
+                break;
+            case 2:
+                $q->with([
+                    'category',
+                    'depts',
+                    'years',
+                    'subject'
+                ])->with('urls',function($q){
+                    $q->select('url','post_id');
+                })->whereHas('category',function($q){
+                    $q->where('id', 2);
+                });
+                break;
+            case 3:
+                $q->with([
+                    'category',
+                    'depts',
+                    'years',
+                    'subject'
+                ])->with('urls',function($q){
+                    $q->select('url','post_id');
+                })->whereHas('category',function($q){
+                    $q->where('id', 3);
+                });
+                break;
+            case 4:
+                $q->with([
+                    'category',
+                    'depts',
+                    'years',
+                    'subject'
+                ])->with('urls',function($q){
+                    $q->select('url','post_id');
+                })->whereHas('category',function($q){
+                    $q->where('id', 4);
+                });
+                break;
+        }
+
+    }
 }

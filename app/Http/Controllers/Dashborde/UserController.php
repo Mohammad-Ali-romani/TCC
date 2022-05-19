@@ -18,7 +18,7 @@ class UserController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+//        $this->middleware('auth');
     }
 
 
@@ -228,13 +228,13 @@ class UserController extends Controller
 
         if ($filteredUsers->count() ) {
 
-            return view('User.Home')->with([
+            return redirect()->back()->with([
                 'allUsers' =>  $filteredUsers
             ]);
         }
     else {
 
-        return redirect()->route('User.allUser')->with([
+        return redirect()->back()->with([
             'status' => 'search failed ,, please try again'
         ]);
         }

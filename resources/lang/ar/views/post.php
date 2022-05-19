@@ -12,7 +12,7 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-    
+
     'dept'=>'القسم',
     'year'=>'السنة',
     'subject'=>'المادة',
@@ -20,7 +20,7 @@ return [
     'description'=>'تفاصيل',
     'delete'=>'حذف',
     'processes'=>'العمليات',
-   
+
 
     // create page
     'add'=>'اضافة',
@@ -35,7 +35,7 @@ return [
     //advertisment
     'advertisments'=>'الاعلانات',
     'advertisment'=>'الاعلان',
-    
+
     //lecture
     'lecture'=>'المحاضرة',
     'lectures'=>'المحاضرات',
@@ -48,7 +48,7 @@ return [
     'program'=>'البرنامج',
     'programs'=>'البرامج',
 
-    
-    
-   
+    'urls'=>'الملفات'
+
+
 ];

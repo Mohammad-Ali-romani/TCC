@@ -39,34 +39,17 @@ class PostController extends Controller
         // $x=Category::select('id','name')->where('name','advertisment')->get();
 
         //get data { category (where category name == advertisment) , depts , years , subject   } where category is not null(this condetion cause return other data(prog,mark,lecut) == null)
-        $allAdvertismentsPosts = Post::with([
-            'category' => function ($q) {
-                $q->select('id', 'name')->where('id', 1);
-            },
-            'depts',
-            'years',
-            'subject'
-        ])->whereHas('category',function($q){
-            $q->where('id',1);
-        })->get();
+        $allAdvertismentsPosts = Post::getAll(1)->get();
 //        return $allAdvertismentsPosts;
         return view('Advertisment.Home', compact('allAdvertismentsPosts'));
         // return $allAdvertismentsPosts;
     }
-
-
     public function indexMark()
     {
 
+
         //get data { category (where category name == mark) , depts , years , subject   } where category is not null(this condetion cause return other data(adve,prog,lecture) == null)
-        $allMarksPosts = Post::with([
-            'category' => function ($q) {
-                $q->select('id', 'name')->where('name', 'mark');
-            },
-            'depts',
-            'years',
-            'subject'
-        ])->get()->where('category', '!=', null);
+        $allMarksPosts = Post::getAll(3)->get();
 
         //  return $allMarksPosts;
         return view('Mark.Home', compact('allMarksPosts'));
@@ -77,14 +60,7 @@ class PostController extends Controller
     {
 
         //get data { category (where category name = program) , depts , years , subject   } where category is not null(this condetion cause return other data(adve,mark ,lecture) == null)
-        $allProgramsPosts = Post::with([
-            'category' => function ($q) {
-                $q->select('id', 'name')->where('name', 'program');
-            },
-            'depts',
-            'years',
-            'subject'
-        ])->get()->where('category', '!=', null);
+        $allProgramsPosts = Post::getAll(4)->get();
 
         return view('Program.Home', compact('allProgramsPosts'));
     }
@@ -94,14 +70,7 @@ class PostController extends Controller
     {
 
         //get data { category (where category name = lecture) , depts , years , subject   } where category is not null(this condetion cause return other data(prog,mark,adve) == null)
-        $allLecturesPosts = Post::with([
-            'category' => function ($q) {
-                $q->select('id', 'name')->where('name', 'lecture');
-            },
-            'depts',
-            'years',
-            'subject'
-        ])->get()->where('category', '!=', null);
+        $allLecturesPosts = Post::getAll(2)->get();
 
         return view('Lecture.Home', compact('allLecturesPosts'));
     }

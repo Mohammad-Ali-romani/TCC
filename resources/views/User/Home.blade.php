@@ -8,11 +8,10 @@
             <a href="{{route('User.create')}}"
                class="user btn btn-info">{{__('views/user.add').' '.__('views/user.user')}}</a>
              search
-            <form method="POST" action="{{route('User.search')}}" enctype="multipart/form-data">
+            <form method="get" action="{{route('User.search')}}" enctype="multipart/form-data">
                 @csrf
                 <input type="text" name="q" id="q" class="form-control" >
                 <button type="submit" class="btn btn-primary mt-2"> Search</button>
-
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="Active" value="1" @checked()>
                     <label class="form-check-label" for="flexRadioDefault2">
