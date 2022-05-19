@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Dashborde;
+namespace App\Http\Controllers;
 
 
 //use Illuminate\Http\Request;
@@ -44,6 +44,7 @@ class PostController extends Controller
         return view('Advertisment.Home', compact('allAdvertismentsPosts'));
         // return $allAdvertismentsPosts;
     }
+
     public function indexMark()
     {
 

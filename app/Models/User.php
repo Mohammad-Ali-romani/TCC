@@ -67,10 +67,7 @@ class User extends Authenticatable
     ######## End relations #############
     #####################################
 
-    public function getStatusAttribute($status)
-    {
-        return $status == 1 ? __('messages.active') : __('messages.unactive');
-    }
 
-    
+
+
 }

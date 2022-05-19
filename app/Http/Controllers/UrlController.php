@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Dashborde;
+namespace App\Http\Controllers;
 
-use App\Models\Level;
+use App\Models\Url;
 use Illuminate\Http\Request;
 
-class LevelController extends Controller
+class UrlController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class LevelController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Level  $level
+     * @param  \App\Models\Url  $url
      * @return \Illuminate\Http\Response
      */
-    public function show(Level $level)
+    public function show(Url $url)
     {
         //
     }
@@ -52,10 +52,10 @@ class LevelController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Level  $level
+     * @param  \App\Models\Url  $url
      * @return \Illuminate\Http\Response
      */
-    public function edit(Level $level)
+    public function edit(Url $url)
     {
         //
     }
@@ -64,10 +64,10 @@ class LevelController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Level  $level
+     * @param  \App\Models\Url  $url
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Level $level)
+    public function update(Request $request, Url $url)
     {
         //
     }
@@ -75,10 +75,10 @@ class LevelController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Level  $level
+     * @param  \App\Models\Url  $url
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Level $level)
+    public function destroy(Url $url)
     {
         //
     }

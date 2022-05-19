@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Dashborde;
+namespace App\Http\Controllers;
 
 use App\Models\Dept;
 use App\Models\Subject;
@@ -16,10 +16,7 @@ class SubjectController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+
 
 
     public function index()
@@ -147,7 +144,7 @@ class SubjectController extends Controller
         {
             return redirect()->route('Subject.index')->with(['error'=>'المادة غير موجودة']);
         }
-        
+
         //delete subject from table "subjects"
         $subject->delete();
 

@@ -1,14 +1,12 @@
 <?php
+
 namespace routes;
 
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Dashborde\PostController;
-use App\Http\Controllers\Dashborde\SubjectController;
-use App\Http\Controllers\Dashborde\UserController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,20 +23,22 @@ use Illuminate\Support\Facades\Hash;
 //define('PAGINATION_COUNT',10);
 
 
-Route::get('/',[PostController::class,'indexAdvertisment']);
-Auth::routes(['register' => false]);
+Route::get('/', [PostController::class, 'indexAdvertisment']);
+//Route::get('/unstatic'function(){
+//    return view('')
+//});
 Route::get('/profile', [HomeController::class, 'index'])->name('profile');
 
 ############################################################################################################
 ################################################ Begin Routes Advertisment #################################
 ############################################################################################################
-Route::group(['prefix'=>'Advertisment'],function(){
-    Route::get('/',[PostController::class,'indexAdvertisment'])->name('Advertisment.index');
-    Route::get('create',[PostController::class,'createAdvertisment'])->name('Advertisment.create');
-    Route::post('create/store',[PostController::class,'storeAdvertisment'])->name('Advertisment.store');
-    Route::get('edit/{Advertisment_id}',[PostController::class,'editAdvertisment'])->name('Advertisment.edit');
-    Route::post('update/{Advertisment_id}',[PostController::class,'updateAdvertisment'])->name('Advertisment.update');
-    Route::get('delete/{Advertisment_id}',[PostController::class,'destroyAdvertisment'])->name('Advertisment.delete');
+Route::group(['prefix' => 'Advertisment'], function () {
+    Route::get('/', [PostController::class, 'indexAdvertisment'])->name('Advertisment.index');
+    Route::get('create', [PostController::class, 'createAdvertisment'])->name('Advertisment.create');
+    Route::post('create/store', [PostController::class, 'storeAdvertisment'])->name('Advertisment.store');
+    Route::get('edit/{Advertisment_id}', [PostController::class, 'editAdvertisment'])->name('Advertisment.edit');
+    Route::post('update/{Advertisment_id}', [PostController::class, 'updateAdvertisment'])->name('Advertisment.update');
+    Route::get('delete/{Advertisment_id}', [PostController::class, 'destroyAdvertisment'])->name('Advertisment.delete');
 
 });
 ############################################################################################################
@@ -46,18 +46,17 @@ Route::group(['prefix'=>'Advertisment'],function(){
 ############################################################################################################
 
 
-
 ############################################################################################################
 ################################################ Begin Routes Lecture #################################
 ############################################################################################################
-Route::group(['prefix'=>'Lecture'],function(){
-    Route::get('/',[PostController::class,'indexLecture'])->name('Lecture.index');
-    Route::get('create',[PostController::class,'createLecture'])->name('Lecture.create');
-    Route::post('create/store',[PostController::class,'storeLecture'])->name('Lecture.store');
-    Route::get('edit/{Lecture_id}',[PostController::class,'editLecture'])->name('Lecture.edit');
-    Route::post('update/{Lecture_id}',[PostController::class,'updateLecture'])->name('Lecture.update');
-    Route::get('delete/{Lecture_id}',[PostController::class,'destroyLectrue'])->name('Lecture.delete');
-    Route::post('/',[PostController::class,'searchLecture'])->name('Lecture.search');
+Route::group(['prefix' => 'Lecture'], function () {
+    Route::get('/', [PostController::class, 'indexLecture'])->name('Lecture.index');
+    Route::get('create', [PostController::class, 'createLecture'])->name('Lecture.create');
+    Route::post('create/store', [PostController::class, 'storeLecture'])->name('Lecture.store');
+    Route::get('edit/{Lecture_id}', [PostController::class, 'editLecture'])->name('Lecture.edit');
+    Route::post('update/{Lecture_id}', [PostController::class, 'updateLecture'])->name('Lecture.update');
+    Route::get('delete/{Lecture_id}', [PostController::class, 'destroyLectrue'])->name('Lecture.delete');
+    Route::post('/', [PostController::class, 'searchLecture'])->name('Lecture.search');
 
 });
 ############################################################################################################
@@ -65,18 +64,17 @@ Route::group(['prefix'=>'Lecture'],function(){
 ############################################################################################################
 
 
-
 ############################################################################################################
 ################################################ Begin Routes Mark #################################
 ############################################################################################################
-Route::group(['prefix'=>'Mark'],function(){
-    Route::get('/',[PostController::class,'indexMark'])->name('Mark.index');
-    Route::get('create',[PostController::class,'createMark'])->name('Mark.create');
-    Route::post('create/store',[PostController::class,'storeMark'])->name('Mark.store');
-    Route::get('edit/{Mark_id}',[PostController::class,'editMark'])->name('Mark.edit');
-    Route::post('update/{Mark_id}',[PostController::class,'updateMark'])->name('Mark.update');
-    Route::get('delete/{Mark_id}',[PostController::class,'destroyMark'])->name('Mark.delete');
-    Route::post('/',[PostController::class,'searchMark'])->name('Mark.search');
+Route::group(['prefix' => 'Mark'], function () {
+    Route::get('/', [PostController::class, 'indexMark'])->name('Mark.index');
+    Route::get('create', [PostController::class, 'createMark'])->name('Mark.create');
+    Route::post('create/store', [PostController::class, 'storeMark'])->name('Mark.store');
+    Route::get('edit/{Mark_id}', [PostController::class, 'editMark'])->name('Mark.edit');
+    Route::post('update/{Mark_id}', [PostController::class, 'updateMark'])->name('Mark.update');
+    Route::get('delete/{Mark_id}', [PostController::class, 'destroyMark'])->name('Mark.delete');
+    Route::post('/', [PostController::class, 'searchMark'])->name('Mark.search');
 
 });
 ############################################################################################################
@@ -84,43 +82,39 @@ Route::group(['prefix'=>'Mark'],function(){
 ############################################################################################################
 
 
-
 ############################################################################################################
 ################################################ Begin Routes Program #################################
 ############################################################################################################
-Route::group(['prefix'=>'Program'],function(){
+Route::group(['prefix' => 'Program'], function () {
 
-    Route::get('/',[PostController::class,'indexProgram'])->name('Program.index');
-    Route::get('create',[PostController::class,'createProgram'])->name('Program.create');
-    Route::post('create/store',[PostController::class,'storeProgram'])->name('Program.store');
-    Route::get('edit/{Program_id}',[PostController::class,'editProgram'])->name('Program.edit');
-    Route::post('update/{Program_id}',[PostController::class,'updateProgram'])->name('Program.update');
-    Route::get('delete/{Program_id}',[PostController::class,'destroyProgram'])->name('Program.delete');
-    Route::post('/',[PostController::class,'searchProgram'])->name('Program.search');
-
-
+    Route::get('/', [PostController::class, 'indexProgram'])->name('Program.index');
+    Route::get('create', [PostController::class, 'createProgram'])->name('Program.create');
+    Route::post('create/store', [PostController::class, 'storeProgram'])->name('Program.store');
+    Route::get('edit/{Program_id}', [PostController::class, 'editProgram'])->name('Program.edit');
+    Route::post('update/{Program_id}', [PostController::class, 'updateProgram'])->name('Program.update');
+    Route::get('delete/{Program_id}', [PostController::class, 'destroyProgram'])->name('Program.delete');
+    Route::post('/', [PostController::class, 'searchProgram'])->name('Program.search');
 
 
 });
-Route::get('post/delete-url/{url_id}',[PostController::class,'deleteUrl'])->name('delete.url');
+Route::get('post/delete-url/{url_id}', [PostController::class, 'deleteUrl'])->name('delete.url');
 ############################################################################################################
 ################################################ End Routes Program #################################
 ############################################################################################################
 
 
-
 ############################################################################################################
 ################################################ Begin Routes Subject #################################
 ############################################################################################################
-Route::group(['prefix'=>'Subject'],function(){
+Route::group(['prefix' => 'Subject'], function () {
 
-    Route::get('/',[SubjectController::class,'index'])->name('Subject.index');
-    Route::get('create',[SubjectController::class,'create'])->name('Subject.create');
-    Route::post('create/store',[SubjectController::class,'store'])->name('Subject.store');
-    Route::get('edit/{Subject_id}',[SubjectController::class,'edit'])->name('Subject.edit');
-    Route::post('update/{Subject_id}',[SubjectController::class,'update'])->name('Subject.update');
-    Route::get('delete/{Subject_id}',[SubjectController::class,'destroy'])->name('Subject.delete');
-    Route::post('/',[SubjectController::class,'searchSubject'])->name('Subject.search');
+    Route::get('/', [SubjectController::class, 'index'])->name('Subject.index');
+    Route::get('create', [SubjectController::class, 'create'])->name('Subject.create');
+    Route::post('create/store', [SubjectController::class, 'store'])->name('Subject.store');
+    Route::get('edit/{Subject_id}', [SubjectController::class, 'edit'])->name('Subject.edit');
+    Route::post('update/{Subject_id}', [SubjectController::class, 'update'])->name('Subject.update');
+    Route::get('delete/{Subject_id}', [SubjectController::class, 'destroy'])->name('Subject.delete');
+    Route::post('/', [SubjectController::class, 'searchSubject'])->name('Subject.search');
 
 
 });
@@ -132,7 +126,7 @@ Route::group(['prefix'=>'Subject'],function(){
 ############################################################################################################
 ################################################ Begin Routes User #################################
 ############################################################################################################
-Route::group(['prefix'=>'user'],function() {
+Route::group(['prefix' => 'user'], function () {
 
     Route::get('all', [UserController::class, 'AllUser'])->name('User.allUser');
     Route::get('active', [UserController::class, 'ActiveUser'])->name('User.activeUser');

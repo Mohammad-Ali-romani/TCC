@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Dashborde;
+namespace App\Http\Controllers;
 
-use App\Models\Year;
+use App\Models\Dept;
 use Illuminate\Http\Request;
 
-class YearController extends Controller
+class DeptController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class YearController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Year  $year
+     * @param  \App\Models\Dept  $dept
      * @return \Illuminate\Http\Response
      */
-    public function show(Year $year)
+    public function show(Dept $dept)
     {
         //
     }
@@ -52,10 +52,10 @@ class YearController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Year  $year
+     * @param  \App\Models\Dept  $dept
      * @return \Illuminate\Http\Response
      */
-    public function edit(Year $year)
+    public function edit(Dept $dept)
     {
         //
     }
@@ -64,10 +64,10 @@ class YearController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Year  $year
+     * @param  \App\Models\Dept  $dept
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Year $year)
+    public function update(Request $request, Dept $dept)
     {
         //
     }
@@ -75,10 +75,10 @@ class YearController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Year  $year
+     * @param  \App\Models\Dept  $dept
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Year $year)
+    public function destroy(Dept $dept)
     {
         //
     }
