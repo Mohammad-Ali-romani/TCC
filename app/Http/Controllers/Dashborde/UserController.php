@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Level;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -53,8 +54,7 @@ class UserController extends Controller
     {
         //get All  levle from table "levels"
         $levels = Level::select('id','name')->get();
-
-        return view('auth.register',compact('levels'));
+        return view('User.Create',compact('levels'));
     }
 
     /**
@@ -64,12 +64,12 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(UserRequest $request)
-    {      
+    {
 
         //insert data into tabel
         User::create([
             'email'=> $request->email,
-            'password'=>$request->password,
+            'password'=>Hash::make($request->password),
             'level_id'=>$request->level_id,
             'status'=>$request->status,
         ]);
@@ -174,7 +174,7 @@ class UserController extends Controller
     {
         //get user by id from table "users" should update
         $uesr = User::find($User_id);
-        
+
         //check if this user is exist or not
         if(!$uesr)
         {
@@ -201,13 +201,13 @@ class UserController extends Controller
         // check if this user is exist or not
         if(!$user)
         {
-            return redirect()->route('User.index')->with(['error'=>__('messages.user').$User_id.__('messages.not exist m')]);
+            return redirect()->route('User.allUser')->with(['error'=>__('messages.user').$User_id.__('messages.not exist m')]);
         }
 
         //delete this user from tabel "users"
         $user->delete();
 
-        return redirect()->route('User.index')->with(['success'=>__('messages.data has been deleted successfully')]);
+        return redirect()->route('User.allUser')->with(['success'=>__('messages.data has been deleted successfully')]);
     }
 
     //Search
@@ -217,12 +217,9 @@ class UserController extends Controller
 
             'q' => 'required'
         ]);
-
-
         $q = $request->q;
         $Active = $request->Active;
         $level_id = $request->level_id;
-
         $filteredUsers = User::where('name', 'like', '%' . $q . '%')
                                 ->where('status' ,'=',$Active)->where('level_id','=',$level_id)
                                 ->orWhere('email', 'like', '%' . $q . '%')

@@ -25,9 +25,8 @@ class PostRequest extends FormRequest
     {
         return [
             'title'=>'required|max:100',
-            
             'file'=>'file|max:30720|mimes:png,jpg,bmp,pdf,xlsx,pptx,docx',
-            
+
         ];
     }
 

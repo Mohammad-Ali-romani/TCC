@@ -24,38 +24,21 @@ use Illuminate\Support\Facades\Hash;
 
 //define('PAGINATION_COUNT',10);
 
-//Route::get('/',[UserController::class,'login'])->name('login');
-Route::get('/add-user',function(){
-    User::create([
-        'name' => 'mahammad ali',
-        'email' => 'mahammad.ali.romani@gmail.com',
-        'password' => Hash::make('themohammad'),
-        'phone' => '092314152',
-        'status' => true,
-        'level_id' => 1,
-    ]);
-});
 
-Route::get('/',[PostController::class,'indexAdvertisment'])->middleware('auth');
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/',[PostController::class,'indexAdvertisment']);
 Auth::routes(['register' => false]);
-
 Route::get('/profile', [HomeController::class, 'index'])->name('profile');
 
 ############################################################################################################
 ################################################ Begin Routes Advertisment #################################
 ############################################################################################################
 Route::group(['prefix'=>'Advertisment'],function(){
-
     Route::get('/',[PostController::class,'indexAdvertisment'])->name('Advertisment.index');
     Route::get('create',[PostController::class,'createAdvertisment'])->name('Advertisment.create');
     Route::post('create/store',[PostController::class,'storeAdvertisment'])->name('Advertisment.store');
     Route::get('edit/{Advertisment_id}',[PostController::class,'editAdvertisment'])->name('Advertisment.edit');
     Route::post('update/{Advertisment_id}',[PostController::class,'updateAdvertisment'])->name('Advertisment.update');
     Route::get('delete/{Advertisment_id}',[PostController::class,'destroyAdvertisment'])->name('Advertisment.delete');
-
     Route::get('delete url/{url_id}',[PostController::class,'deleteUrl'])->name('delete.url');
 });
 ############################################################################################################
@@ -75,8 +58,6 @@ Route::group(['prefix'=>'Lecture'],function(){
     Route::post('update/{Lecture_id}',[PostController::class,'updateLecture'])->name('Lecture.update');
     Route::get('delete/{Lecture_id}',[PostController::class,'destroyLectrue'])->name('Lecture.delete');
     Route::post('/',[PostController::class,'searchLecture'])->name('Lecture.search');
-
-
     Route::get('delete url/{url_id}',[PostController::class,'deleteUrl'])->name('delete.url');
 
 });
@@ -90,7 +71,6 @@ Route::group(['prefix'=>'Lecture'],function(){
 ################################################ Begin Routes Mark #################################
 ############################################################################################################
 Route::group(['prefix'=>'Mark'],function(){
-
     Route::get('/',[PostController::class,'indexMark'])->name('Mark.index');
     Route::get('create',[PostController::class,'createMark'])->name('Mark.create');
     Route::post('create/store',[PostController::class,'storeMark'])->name('Mark.store');
@@ -98,8 +78,6 @@ Route::group(['prefix'=>'Mark'],function(){
     Route::post('update/{Mark_id}',[PostController::class,'updateMark'])->name('Mark.update');
     Route::get('delete/{Mark_id}',[PostController::class,'destroyMark'])->name('Mark.delete');
     Route::post('/',[PostController::class,'searchMark'])->name('Mark.search');
-
-
     Route::get('delete url/{url_id}',[PostController::class,'deleteUrl'])->name('delete.url');
 
 });
@@ -175,7 +153,6 @@ Route::group(['prefix'=>'User'],function() {
 ################################################ End Routes Users #################################
 ############################################################################################################
 
-Route::get('test', [PostController::class, 'test'])->name('test');
 
 
 
