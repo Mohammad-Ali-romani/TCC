@@ -24,9 +24,6 @@ use App\Http\Controllers\HomeController;
 
 
 Route::get('/', [PostController::class, 'indexAdvertisment']);
-//Route::get('/unstatic'function(){
-//    return view('')
-//});
 Route::get('/profile', [HomeController::class, 'index'])->name('profile');
 
 ############################################################################################################
@@ -129,15 +126,13 @@ Route::group(['prefix' => 'Subject'], function () {
 Route::group(['prefix' => 'user'], function () {
 
     Route::get('all', [UserController::class, 'AllUser'])->name('User.allUser');
-    Route::get('active', [UserController::class, 'ActiveUser'])->name('User.activeUser');
-    Route::get('unactive', [UserController::class, 'NotActiveUser'])->name('User.notActiveUser');
+    Route::get('{isactive}', [UserController::class, 'ActiveUser'])->name('User.activeUser');
     Route::get('create', [UserController::class, 'create'])->name('User.create');
     Route::post('create/store', [UserController::class, 'store'])->name('User.store');
     Route::get('edit/{User_id}', [UserController::class, 'edit'])->name('User.edit');
     Route::post('update/{User_id}', [UserController::class, 'update'])->name('User.update');
     Route::get('delete/{User_id}', [UserController::class, 'destroy'])->name('User.delete');
-    Route::get('active/{User_id}', [UserController::class, 'activate'])->name('User.activate');
-    Route::get('unactive/{User_id}', [UserController::class, 'unactivate'])->name('User.unactivate');
+    Route::get('/{id}/{active}', [UserController::class, 'activate'])->name('User.activate');
 
     Route::get('search', [UserController::class, 'search'])->name('User.search');
 

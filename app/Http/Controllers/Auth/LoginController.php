@@ -40,11 +40,13 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
     public function login(Request $request)
     {
-        $user = User::where('email',$request->email)->first();
-        if(!$user->status)
-            return $this->sendFailedLoginStatus($request);
+        $user = User::where('email', $request->email)->first();
+        if (isset($user))
+            if (!$user->status)
+                return $this->sendFailedLoginStatus($request);
         $this->validateLogin($request);
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
@@ -72,6 +74,7 @@ class LoginController extends Controller
 
         return $this->sendFailedLoginResponse($request);
     }
+
     protected function sendFailedLoginStatus(Request $request)
     {
         throw ValidationException::withMessages([

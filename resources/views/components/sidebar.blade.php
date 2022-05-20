@@ -4,11 +4,11 @@
           <ul class="nav flex-column">
             <li class="nav-item">
               <a class="nav-link" aria-current="page" href="{{route('User.allUser')}}">{{__('views/component.all users')}}</a>
-              <a class="nav-link" aria-current="page" href="{{route('User.activeUser')}}">{{__('views/component.active users')}}</a>
-              <a class="nav-link" aria-current="page" href="{{route('User.notActiveUser')}}">{{__('views/component.unactive users')}}</a>
+              <a class="nav-link" aria-current="page" href="{{route('User.activeUser','active')}}">{{__('views/component.active users')}}</a>
+              <a class="nav-link" aria-current="page" href="{{route('User.activeUser','unactive')}}">{{__('views/component.unactive users')}}</a>
 
-                
-              
+
+
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{route('Lecture.index')}}">

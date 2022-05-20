@@ -22,25 +22,31 @@ class UserController extends Controller
     public function AllUser()
     {
         // get All Users(Active or not Avtive) form table "users"
-        $allUsers = User::get();
+        $allUsers = User::where('id','!=',auth()->id())->get();
 
         return view('User.Home',compact('allUsers'));
     }
 
-    public function ActiveUser()
+    public function ActiveUser($isactive)
     {
+        if($isactive == 'active')
+        $isactivebool =true;
+        elseif($isactive == 'unactive')
+            $isactivebool = false;
+        else
+            return view('errors.404');
         //get Users (Active only) from tabel "users"
-        $allUsers = User::get()->where('status',__('messages.active'));
+        $allUsers = User::where('status',$isactivebool)->get();
 
         return view('User.Home',compact('allUsers'));
     }
-    public function NotActiveUser()
-    {
-        //get users (not Avtive only) from tabel "users"
-        $allUsers = User::get()->where('status',__('messages.unactive'));
-
-        return view('User.Home',compact('allUsers'));
-    }
+//    public function NotActiveUser()
+//    {
+//        //get users (not Avtive only) from tabel "users"
+//        $allUsers = User::where('status',false)->get();
+//
+//        return view('User.Home',compact('allUsers'));
+//    }
 
     /**
      * Show the form for creating a new resource.
@@ -121,50 +127,24 @@ class UserController extends Controller
      */
 
      //this Methode to avtive user
-    public function activate($User_id)
+    public function activate($id,$active)
     {
         //get user by id from table "users" should Avtive
-        $user= User::find($User_id);
+        $user= User::find($id);
 
         //check if this user is exist or not
         if(!$user)
         {
-            return redirect()->route('User.allUser')->with(['error'=>__('messages.user').$User_id.__('messages.not exist m')]);
+            return redirect()->route('User.allUser')->with(['error'=>__('messages.user').$id.__('messages.not exist m')]);
         }
 
         //update column status to avtive
         $user->update([
-            'status'=>'1'
+            'status'=>$active
         ]);
-
-
         return redirect()->back()->with(['success'=>__('messages.data has been updated successfully')]);
 
     }
-
-    //this Methode to unavtive user
-    public function unactivate($User_id)
-    {
-        //get user by id from table "users" should unActive
-        $user= User::find($User_id);
-
-        //check if this user is exist or not
-        if(!$user)
-        {
-            return redirect()->route('User.allUser')->with(['error'=>__('messages.user').$User_id.__('messages.not exist m')]);
-        }
-
-        //update column status to unavtive
-            $user->update([
-                'status'=>'0'
-            ]);
-
-
-
-        return redirect()->back()->with(['success'=>__('messages.data has been updated successfully')]);
-
-    }
-
 
 
     public function update(UserRequest $request,$User_id)
