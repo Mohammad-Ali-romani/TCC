@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashborde;
 
 use App\Models\User;
 use App\Models\Level;
+use App\Models\admin_groups;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
@@ -18,7 +19,8 @@ class UserController extends Controller
      */
     public function __construct()
     {
-//        $this->middleware('auth');
+        $this->middleware('auth');
+        $this->middleware('Permission:admin_show',['only' => 'AllUser']);
     }
 
 
@@ -74,6 +76,32 @@ class UserController extends Controller
             'status'=>$request->status,
         ]);
 
+        $id = User::select('id')->orderBy('created_at', 'desc')->first();
+        if ($request->level_id === '1'){
+            admin_groups::create([
+                'user_id' => $id->id,
+                'admin_show'         =>'enable',
+                'admin_add'          =>'enable',
+                'admin_edit'         =>'enable',
+                'admin_delete'       =>'enable',
+                'lecture_show'       =>'enable',
+                'lecture_add'        =>'enable',
+                'lecture_edit'       =>'enable',
+                'lecture_delete'     =>'enable',
+                'ad_show'            =>'enable',
+                'ad_add'             =>'enable',
+                'ad_edit'            =>'enable',
+                'ad_delete'          =>'enable',
+                'program_show'       =>'enable',
+                'program_add'        =>'enable',
+                'program_edit'       =>'enable',
+                'program_delete'     =>'enable',
+                'mark_show'          =>'enable',
+                'mark_add'           =>'enable',
+                'mark_edit'          =>'enable',
+                'mark_delete'        =>'enable',
+            ]);
+        }
 
         //retrun into index page
         return redirect()->route('User.allUser')->with(['success'=>__('messages.data has been inserted successfully')]);
@@ -233,8 +261,8 @@ class UserController extends Controller
             ]);
         }
     else {
-
-        return redirect()->back()->with([
+        //return redirect()->route('signUp')->withInput();
+        return redirect()->back()->withInput()->with([
             'status' => 'search failed ,, please try again'
         ]);
         }

@@ -10,10 +10,10 @@
              search
             <form method="get" action="{{route('User.search')}}" enctype="multipart/form-data">
                 @csrf
-                <input type="text" name="q" id="q" class="form-control" >
+                <input type="text" name="q" id="q" class="form-control" value="{{old('q')}}" >
                 <button type="submit" class="btn btn-primary mt-2"> Search</button>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="Active" value="1" @checked()>
+                    <input class="form-check-input" type="radio" name="Active" value="1" {{ (old('Active')=="1")? "checked" : "" }} @checked()>
                     <label class="form-check-label" for="flexRadioDefault2">
                         الفعالين
                     </label>
@@ -21,7 +21,7 @@
 
 
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="Active" value="0" @checked()>
+                    <input class="form-check-input" type="radio" name="Active" value="0" {{ (old('Active')=="0")? "checked" : "" }} @checked()>
                     <label class="form-check-label" for="flexCheckDefault">
                         الغير الفعالين
                     </label>
@@ -30,10 +30,10 @@
                 <label for="exampleFormControlTextarea1" class="form-label">{{__('views/user.level')}} </label>
                 <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="level_id">
                     <option value="" selected disabled hidden>Choose here</option>
-                    <option value="1" @selected()>Adminstrator</option>
-                    <option value="2" @selected()>Leader</option>
-                    <option value="3" @selected()>StudentBody</option>
-                    <option value="4" @selected()>Student</option>
+                    <option value="1" {{ (old('level_id')=="1")? "selected" : "" }} @selected()>Adminstrator</option>
+                    <option value="2" {{ (old('level_id')=="2")? "selected" : "" }} @selected()>Leader</option>
+                    <option value="3" {{ (old('level_id')=="3")? "selected" : "" }} @selected()>StudentBody</option>
+                    <option value="4" {{ (old('level_id')=="4")? "selected" : "" }} @selected()>Student</option>
 
 
                 </select>
@@ -76,7 +76,7 @@
 
 
                     <td>
-                        {{-- <a href="{{route('User.edit',$User->id)}}" class="btn btn-success">{{__('views/user.edit')}}</a> --}}
+                         <a href="{{route('User.edit',$User->id)}}" class="btn btn-success">{{__('views/user.edit')}}</a>
                         <a href="{{route('User.delete',$User->id)}}"
                            class="btn btn-danger">{{__('views/user.delete')}}</a>
 

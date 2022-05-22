@@ -1,6 +1,7 @@
 <?php
 namespace routes;
 
+use App\Http\Controllers\AdminGroupsController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Dashborde\PostController;
 use App\Http\Controllers\Dashborde\SubjectController;
@@ -24,9 +25,9 @@ use Illuminate\Support\Facades\Hash;
 
 //define('PAGINATION_COUNT',10);
 
+Auth::routes(['register' => false]);
 
 Route::get('/',[PostController::class,'indexAdvertisment']);
-Auth::routes(['register' => false]);
 Route::get('/profile', [HomeController::class, 'index'])->name('profile');
 
 ############################################################################################################
@@ -151,7 +152,7 @@ Route::group(['prefix'=>'user'],function() {
 ############################################################################################################
 ################################################ End Routes Users #################################
 ############################################################################################################
-
+Route::post('update/{User_id}', [AdminGroupsController::class, 'update'])->name('AdminGroup.update');
 
 
 
