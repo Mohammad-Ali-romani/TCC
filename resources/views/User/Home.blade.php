@@ -72,7 +72,13 @@
                     <td>{{$User->email}}</td>
                     <td>{{$User->phone}}</td>
                     <td>{{$User->level->name}}</td>
-                    <td>{{$User->status  }}</td>
+                    <td>  @if ($User->status)
+                            <span
+                               class="badge bg-danger">{{__('views/user.unactivate')}}</span>
+                        @else
+                            <span href="{{route('User.activate',[$User->id,1])}}"
+                               class="badge bg-success">{{__('views/user.activate')}}</span>
+                        @endif</td>
 
 
                     <td>
@@ -80,11 +86,11 @@
                         <a href="{{route('User.delete',$User->id)}}"
                            class="btn btn-danger">{{__('views/user.delete')}}</a>
 
-                        @if ($User->status == __('messages.active'))
-                            <a href="{{route('User.unactivate',$User->id)}}"
+                        @if ($User->status)
+                            <a href="{{route('User.activate',[$User->id,0])}}"
                                class="btn btn-dark">{{__('views/user.unactivate')}}</a>
                         @else
-                            <a href="{{route('User.activate',$User->id)}}"
+                            <a href="{{route('User.activate',[$User->id,1])}}"
                                class="btn btn-success">{{__('views/user.activate')}}</a>
                         @endif
 

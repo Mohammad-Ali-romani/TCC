@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Dashborde;
+namespace App\Http\Controllers;
 
-use App\Models\Dept_Post;
+use App\Models\Level;
 use Illuminate\Http\Request;
 
-class DeptPostController extends Controller
+class LevelController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class DeptPostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Dept_Post  $dept_Post
+     * @param  \App\Models\Level  $level
      * @return \Illuminate\Http\Response
      */
-    public function show(Dept_Post $dept_Post)
+    public function show(Level $level)
     {
         //
     }
@@ -52,10 +52,10 @@ class DeptPostController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Dept_Post  $dept_Post
+     * @param  \App\Models\Level  $level
      * @return \Illuminate\Http\Response
      */
-    public function edit(Dept_Post $dept_Post)
+    public function edit(Level $level)
     {
         //
     }
@@ -64,10 +64,10 @@ class DeptPostController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Dept_Post  $dept_Post
+     * @param  \App\Models\Level  $level
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Dept_Post $dept_Post)
+    public function update(Request $request, Level $level)
     {
         //
     }
@@ -75,10 +75,10 @@ class DeptPostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Dept_Post  $dept_Post
+     * @param  \App\Models\Level  $level
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Dept_Post $dept_Post)
+    public function destroy(Level $level)
     {
         //
     }

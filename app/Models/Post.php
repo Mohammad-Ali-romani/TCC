@@ -16,44 +16,52 @@ use App\Models\Dept;
 class Post extends Model
 {
     use HasFactory;
-    protected $fillable=['title','description','category_id','user_id','subject_id','created_at','updated_at'];
-    protected $hidden=[];
+
+    protected $fillable = ['title', 'description', 'category_id', 'user_id', 'subject_id', 'created_at', 'updated_at'];
+    protected $hidden = [];
 
     public function subject()
     {
-        return $this->belongsTo(Subject::class,'subject_id');
+        return $this->belongsTo(Subject::class, 'subject_id');
     }
+
     public function user()
     {
-        return $this->belongsTo(User::class,'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
+
     public function category()
     {
-        return $this->belongsTo(Category::class,'category_id');
+        return $this->belongsTo(Category::class, 'category_id');
     }
+
     public function urls()
     {
-        return $this->hasMany(Url::class,'post_id');
+        return $this->hasMany(Url::class, 'post_id');
     }
+
     public function depts()
     {
-        return $this->belongsToMany(Dept::class,'dept_posts');
+        return $this->belongsToMany(Dept::class, 'dept_posts');
     }
+
     public function years()
     {
-        return $this->belongsToMany(Year::class,'year_posts');
+        return $this->belongsToMany(Year::class, 'year_posts');
     }
-    public function scopegetAll($q,$cate){
-        switch ($cate){
+
+    public function scopegetAll($q, $cate)
+    {
+        switch ($cate) {
             case 1:
                 $q->with([
                     'category',
                     'depts',
                     'years',
                     'subject'
-                ])->with('urls',function($q){
-                    $q->select('url','post_id');
-                })->whereHas('category',function($q){
+                ])->with('urls', function ($q) {
+                    $q->select('url', 'post_id');
+                })->whereHas('category', function ($q) {
                     $q->where('id', 1);
                 });
                 break;
@@ -63,9 +71,9 @@ class Post extends Model
                     'depts',
                     'years',
                     'subject'
-                ])->with('urls',function($q){
-                    $q->select('url','post_id');
-                })->whereHas('category',function($q){
+                ])->with('urls', function ($q) {
+                    $q->select('url', 'post_id');
+                })->whereHas('category', function ($q) {
                     $q->where('id', 2);
                 });
                 break;
@@ -75,9 +83,9 @@ class Post extends Model
                     'depts',
                     'years',
                     'subject'
-                ])->with('urls',function($q){
-                    $q->select('url','post_id');
-                })->whereHas('category',function($q){
+                ])->with('urls', function ($q) {
+                    $q->select('url', 'post_id');
+                })->whereHas('category', function ($q) {
                     $q->where('id', 3);
                 });
                 break;
@@ -87,9 +95,9 @@ class Post extends Model
                     'depts',
                     'years',
                     'subject'
-                ])->with('urls',function($q){
-                    $q->select('url','post_id');
-                })->whereHas('category',function($q){
+                ])->with('urls', function ($q) {
+                    $q->select('url', 'post_id');
+                })->whereHas('category', function ($q) {
                     $q->where('id', 4);
                 });
                 break;
