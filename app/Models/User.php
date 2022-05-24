@@ -73,9 +73,4 @@ class User extends Authenticatable
     #####################################
 
 
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 87be09f5da521a700c534c67e8897917c1035e9a
 }

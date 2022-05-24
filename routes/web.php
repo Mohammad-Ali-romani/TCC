@@ -3,9 +3,9 @@ namespace routes;
 
 use App\Http\Controllers\AdminGroupsController;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Dashborde\PostController;
-use App\Http\Controllers\Dashborde\SubjectController;
-use App\Http\Controllers\Dashborde\UserController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Models\User;
