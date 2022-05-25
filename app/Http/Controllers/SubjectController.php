@@ -199,11 +199,12 @@ class SubjectController extends Controller
                 'allSubjects' =>  $filteredLectre
             ]);
         }
-    else {
+        else {
 
-        return redirect()->route('Subject.index')->with([
-            'status' => 'search failed ,, please try again'
-        ]);
+            //return redirect()->back()->withInput()->with([
+            return view('Subject.Home')->with([
+                'status' => 'search failed ,, please try again','allSubjects' =>  $filteredLectre,
+            ]);
         }
 
     }

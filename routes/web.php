@@ -24,8 +24,16 @@ use Illuminate\Support\Facades\Hash;
 
 
 //define('PAGINATION_COUNT',10);
-
-Auth::routes(['register' => false]);
+Route::get('/add',function (){
+    User::create([
+        'email'=> 'abod@gmail.com',
+        'password'=>Hash::make(123123),
+        'level_id'=>'1',
+        'status'=>'1',
+    ]);
+    return 'done';
+});
+//Auth::routes(['register' => false]);
 
 Route::get('/',[PostController::class,'indexAdvertisment']);
 Route::get('/profile', [HomeController::class, 'index'])->name('profile');
