@@ -1,1 +1,5 @@
-|404|hdfdf
+@extends('layout.layout')
+
+@section('content')
+|404|
+@endsection

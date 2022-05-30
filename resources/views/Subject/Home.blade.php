@@ -12,7 +12,7 @@
 
 <form method="POST" action="{{route('Subject.search')}}" enctype="multipart/form-data">
     @csrf
-    <input type="text" name="q" id="q" class="form-control">
+    <input type="text" name="q" id="q" class="form-control" value="{{old('q')}}">
     <button type="submit" class="btn btn-primary mt-2"> Search</button>
 
     <br>

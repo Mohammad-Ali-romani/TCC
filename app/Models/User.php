@@ -63,6 +63,11 @@ class User extends Authenticatable
         return $this->hasMany(Post::class,'user_id');
     }
 
+    public function AdminGroubs(){
+        return $this->hasOne(admin_groups::class,'user_id');
+    }
+
+
     #####################################
     ######## End relations #############
     #####################################
