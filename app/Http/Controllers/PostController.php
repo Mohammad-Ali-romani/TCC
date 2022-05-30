@@ -766,12 +766,9 @@ class PostController extends Controller
             //delete file in folder
             unlink($urll->url);
         }
-
         //delete url in tabel "urls"
         $urll->delete($urll->url);
-
         return redirect()->back();
-
     }
 
 
