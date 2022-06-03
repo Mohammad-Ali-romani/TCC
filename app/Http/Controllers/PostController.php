@@ -27,6 +27,25 @@ class PostController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('Permission:ad_show',['only' => 'indexAdvertisment']);
+        $this->middleware('Permission:ad_add',['only' => 'createAdvertisment','storeAdvertisment']);
+        $this->middleware('Permission:ad_edit',['only' => 'updateAdvertisment']);
+        $this->middleware('Permission:ad_delete',['only' => 'destroyAdvertisment']);
+
+        $this->middleware('Permission:mark_show',['only' => 'indexMark']);
+        $this->middleware('Permission:mark_add',['only' => 'createMark','storeMark']);
+        $this->middleware('Permission:mark_edit',['only' => 'updateMark']);
+        $this->middleware('Permission:mark_delete',['only' => 'destroyMark']);
+
+        $this->middleware('Permission:program_show',['only' => 'indexProgram']);
+        $this->middleware('Permission:program_add',['only' => 'createProgram','storeProgram']);
+        $this->middleware('Permission:program_edit',['only' => 'updateProgram']);
+        $this->middleware('Permission:program_delete',['only' => 'destroyProgram']);
+
+        $this->middleware('Permission:lecture_show',['only' => 'indexLecture']);
+        $this->middleware('Permission:lecture_add',['only' => 'createLecture','updateLecture']);
+        $this->middleware('Permission:lecture_edit',['only' => 'storeLecture']);
+        $this->middleware('Permission:lecture_delete',['only' => 'destroyLecture']);
     }
     /**
      * Display a listing of the resource.

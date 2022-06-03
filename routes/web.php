@@ -33,7 +33,7 @@ Route::get('/add',function (){
     ]);
     return 'done';
 });
-//Auth::routes(['register' => false]);
+Auth::routes();
 
 Route::get('/',[PostController::class,'indexAdvertisment']);
 Route::get('/profile', [HomeController::class, 'index'])->name('profile');

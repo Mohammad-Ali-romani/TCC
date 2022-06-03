@@ -10,7 +10,7 @@
             {{ session('success')}}
         </div>
     @endif
-    <form method="POST" action="{{route('AdminGroup.update',$user->id)}}" enctype="multipart/form-data">
+    <form method="POST" action="{{route('AdminGroup.update',$user->user_id)}}" enctype="multipart/form-data">
         @csrf
         @method('POST')
 
@@ -87,13 +87,13 @@
 
 
 
-        <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">{{__('views/user.name')}}</label>
-          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="{{__('views/user.name')}}" name="name" value="{{$user->name}}">
-          @error('name')
-          <small class="form-text text-danger">{{$message}}</small>
-          @enderror
-        </div>
+{{--        <div class="mb-3">--}}
+{{--          <label for="exampleFormControlInput1" class="form-label">{{__('views/user.name')}}</label>--}}
+{{--          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="{{__('views/user.name')}}" name="name" value="{{$user->name}}">--}}
+{{--          @error('name')--}}
+{{--          <small class="form-text text-danger">{{$message}}</small>--}}
+{{--          @enderror--}}
+{{--        </div>--}}
 
     <table class="table table-striped table-hover table-bordered">
         <thead>
@@ -107,46 +107,49 @@
         </thead>
         <tbode>
             <tr>
+
+
+
                 <td>المستخدمين</td>
-                <td><input type="checkbox" value="enable" name="admin_show" {{old('admin_show')?'checked':''}}></td>
-                <td><input type="checkbox" value="enable" name="admin_add" {{old('admin_add')?'checked':''}}></td>
-                <td><input type="checkbox" value="enable" name="admin_edit" {{old('admin_edit')?'checked':''}}></td>
-                <td><input type="checkbox"  value="enable" name="admin_delete" {{old('admin_delete')?'checked':''}}></td>
+                <td><input type="checkbox" value="enable" name="admin_show" @if ($user->admin_show=='enable') checked @endif></td>
+                <td><input type="checkbox" value="enable" name="admin_add" @if ($user->admin_add=='enable') checked @endif></td>
+                <td><input type="checkbox" value="enable" name="admin_edit" @if ($user->admin_edit=='enable') checked @endif></td>
+                <td><input type="checkbox"  value="enable" name="admin_delete" @if ($user->admin_delete=='enable') checked @endif></td>
             </tr>
             <tr>
                 <td>المحاضرات</td>
-                <td><input type="checkbox" value="enable" name="admin_show" {{old('lecture_show')?'checked':''}}></td>
-                <td><input type="checkbox" value="enable" name="admin_add" {{old('lecture_add')?'checked':''}}></td>
-                <td><input type="checkbox" value="enable" name="admin_edit" {{old('lecture_edit')?'checked':''}}></td>
-                <td><input type="checkbox"  value="enable" name="admin_delete" {{old('lecture_delete')?'checked':''}}></td>
+                <td><input type="checkbox" value="enable" name="lecture_show" @if ($user->lecture_show=='enable') checked @endif></td>
+                <td><input type="checkbox" value="enable" name="lecture_add" @if ($user->lecture_add=='enable') checked @endif></td>
+                <td><input type="checkbox" value="enable" name="lecture_edit" @if ($user->lecture_edit=='enable') checked @endif></td>
+                <td><input type="checkbox"  value="enable" name="lecture_delete" @if ($user->lecture_delete=='enable') checked @endif></td>
             </tr>
             <tr>
                 <td>الإعلانات</td>
-                <td><input type="checkbox" value="enable" name="admin_show" {{old('ad_show')?'checked':''}}></td>
-                <td><input type="checkbox" value="enable" name="admin_add" {{old('ad_add')?'checked':''}}></td>
-                <td><input type="checkbox" value="enable" name="admin_edit" {{old('ad_edit')?'checked':''}}></td>
-                <td><input type="checkbox"  value="enable" name="admin_delete" {{old('ad_delete')?'checked':''}}></td>
+                <td><input type="checkbox" value="enable" name="ad_show" @if ($user->ad_show=='enable') checked @endif></td>
+                <td><input type="checkbox" value="enable" name="ad_add" @if ($user->ad_add=='enable') checked @endif></td>
+                <td><input type="checkbox" value="enable" name="ad_edit" @if ($user->ad_edit=='enable') checked @endif></td>
+                <td><input type="checkbox"  value="enable" name="ad_delete" @if ($user->ad_delete=='enable') checked @endif></td>
             </tr>
             <tr>
                 <td>البرامج</td>
-                <td><input type="checkbox" value="enable" name="admin_show" {{old('program_show')?'checked':''}}></td>
-                <td><input type="checkbox" value="enable" name="admin_add" {{old('program_add')?'checked':''}}></td>
-                <td><input type="checkbox" value="enable" name="admin_edit" {{old('program_edit')?'checked':''}}></td>
-                <td><input type="checkbox"  value="enable" name="admin_delete" {{old('program_delete')?'checked':''}}></td>
+                <td><input type="checkbox" value="enable" name="program_show" @if ($user->program_show=='enable') checked @endif></td>
+                <td><input type="checkbox" value="enable" name="program_add" @if ($user->program_add=='enable') checked @endif></td>
+                <td><input type="checkbox" value="enable" name="program_edit" @if ($user->program_edit=='enable') checked @endif></td>
+                <td><input type="checkbox"  value="enable" name="program_delete" @if ($user->program_delete=='enable') checked @endif></td>
             </tr>
             <tr>
                 <td>العلامات</td>
-                <td><input type="checkbox" value="enable" name="admin_show" {{old('mark_show')?'checked':''}}></td>
-                <td><input type="checkbox" value="enable" name="admin_add" {{old('mark_add')?'checked':''}}></td>
-                <td><input type="checkbox" value="enable" name="admin_edit" {{old('mark_edit')?'checked':''}}></td>
-                <td><input type="checkbox"  value="enable" name="admin_delete" {{old('mark_delete')?'checked':''}}></td>
+                <td><input type="checkbox" value="enable" name="mark_show" @if ($user->mark_show=='enable') checked @endif></td>
+                <td><input type="checkbox" value="enable" name="mark_add" @if ($user->mark_add=='enable') checked @endif></td>
+                <td><input type="checkbox" value="enable" name="mark_edit" @if ($user->mark_edit=='enable') checked @endif></td>
+                <td><input type="checkbox"  value="enable" name="mark_delete" @if ($user->mark_delete=='enable') checked @endif></td>
             </tr>
             <tr>
                 <td>المواد</td>
-                <td><input type="checkbox" value="enable" name="admin_show" {{old('subject_show')?'checked':''}}></td>
-                <td><input type="checkbox" value="enable" name="admin_add" {{old('subject_add')?'checked':''}}></td>
-                <td><input type="checkbox" value="enable" name="admin_edit" {{old('subject_edit')?'checked':''}}></td>
-                <td><input type="checkbox"  value="enable" name="admin_delete" {{old('subject_delete')?'checked':''}}></td>
+                <td><input type="checkbox" value="enable" name="subject_show" @if ($user->subject_show=='enable') checked @endif></td>
+                <td><input type="checkbox" value="enable" name="subject_add" @if ($user->subject_add=='enable') checked @endif></td>
+                <td><input type="checkbox" value="enable" name="subject_edit" @if ($user->subject_edit=='enable') checked @endif></td>
+                <td><input type="checkbox"  value="enable" name="subject_delete" @if ($user->subject_delete=='enable') checked @endif></td>
             </tr>
         </tbode>
     </table>

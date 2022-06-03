@@ -16,7 +16,7 @@ class AdminPermission
      */
     public function handle(Request $request, Closure $next,$role)
     {
-        if(auth()->user()->AdminGroubs->$role == 'disable'){
+        if(auth()->user()->AdminGroubs->$role === 'disable'){
             return back();
         }
         return $next($request);

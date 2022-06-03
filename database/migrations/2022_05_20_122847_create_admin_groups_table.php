@@ -41,6 +41,11 @@ class CreateAdminGroupsTable extends Migration
             $table->enum('mark_edit',['enable','disable'])->default('disable');
             $table->enum('mark_delete',['enable','disable'])->default('disable');
 
+            $table->enum('subject_show',['enable','disable'])->default('disable');
+            $table->enum('subject_add',['enable','disable'])->default('disable');
+            $table->enum('subject_edit',['enable','disable'])->default('disable');
+            $table->enum('subject_delete',['enable','disable'])->default('disable');
+
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });

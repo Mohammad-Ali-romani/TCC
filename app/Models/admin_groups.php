@@ -33,6 +33,10 @@ class admin_groups extends Model
         'mark_add',
         'mark_edit',
         'mark_delete',
+        'subject_show',
+        'subject_add',
+        'subject_edit',
+        'subject_delete',
         'created_at',
         'updated_at',
     ];

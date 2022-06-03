@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\User;
 use App\Models\Level;
 use App\Models\admin_groups;
@@ -22,6 +23,9 @@ class UserController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('Permission:admin_show',['only' => 'AllUser']);
+        $this->middleware('Permission:admin_add',['only' => 'create','store']);
+        $this->middleware('Permission:admin_edit',['only' => 'edit']);
+        $this->middleware('Permission:admin_delete',['only' => 'destroy']);
     }
 
 
@@ -109,6 +113,55 @@ class UserController extends Controller
                 'mark_add'           =>'enable',
                 'mark_edit'          =>'enable',
                 'mark_delete'        =>'enable',
+                'subject_show'       =>'enable',
+                'subject_add'        =>'enable',
+                'subject_edit'       =>'enable',
+                'subject_delete'     =>'enable',
+            ]);
+        }
+        if ($request->level_id === '2'){
+            admin_groups::create([
+                'user_id' => $id->id,
+                'lecture_show'       =>'enable',
+                'lecture_add'        =>'enable',
+                'lecture_edit'       =>'enable',
+                'ad_show'            =>'enable',
+                'ad_add'             =>'enable',
+                'ad_edit'            =>'enable',
+                'program_show'       =>'enable',
+                'program_add'        =>'enable',
+                'program_edit'       =>'enable',
+                'mark_show'          =>'enable',
+                'mark_add'           =>'enable',
+                'mark_edit'          =>'enable',
+                'subject_show'       =>'enable',
+                'subject_add'        =>'enable',
+                'subject_edit'       =>'enable',
+            ]);
+        }
+        if ($request->level_id === '3'){
+            admin_groups::create([
+                'user_id' => $id->id,
+                'lecture_show'       =>'enable',
+                'lecture_add'        =>'enable',
+                'ad_show'            =>'enable',
+                'ad_add'             =>'enable',
+                'program_show'       =>'enable',
+                'program_add'        =>'enable',
+                'mark_show'          =>'enable',
+                'mark_add'           =>'enable',
+                'subject_show'       =>'enable',
+                'subject_add'        =>'enable',
+            ]);
+        }
+        if ($request->level_id === '4'){
+            admin_groups::create([
+                'user_id' => $id->id,
+                'lecture_show'       =>'enable',
+                'ad_show'            =>'enable',
+                'program_show'       =>'enable',
+                'mark_show'          =>'enable',
+                'subject_show'       =>'enable',
             ]);
         }
 
@@ -136,8 +189,7 @@ class UserController extends Controller
     public function edit($User_id)
     {
         // get user by id from tabel "users"  should edit
-        $user= User::find($User_id);
-
+        $user= admin_groups::where('user_id',$User_id)->first();
         //check if this user is exist or not
         if(!$user)
         {

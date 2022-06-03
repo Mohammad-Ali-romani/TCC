@@ -10,6 +10,15 @@ use App\Http\Requests\SubjectRequest;
 
 class SubjectController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('Permission:admin_show',['only' => 'AllUser']);
+        $this->middleware('Permission:admin_add',['only' => 'create','store']);
+        $this->middleware('Permission:admin_edit',['only' => 'edit']);
+        $this->middleware('Permission:admin_delete',['only' => 'destroy']);
+    }
     /**
      * Display a listing of the resource.
      *
