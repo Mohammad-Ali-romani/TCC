@@ -17,7 +17,13 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        
+        User::create([
+            'name'=>'admin',
+            'email'=>'admin@admin.com',
+            'password'=>Hash::make('admin123'),
+            'status'=>true,
+            'level_id'=>1
+        ]);
         $faker = Faker::create();
         foreach (range(1, 10) as $index) {
             DB::table('users')->insert([
